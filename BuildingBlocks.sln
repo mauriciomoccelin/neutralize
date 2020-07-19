@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DB0D340A-CD64-4903-9CC7-F439DC14BB13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlocks.Domain", "src\BuildingBlocks.Domain\BuildingBlocks.Domain.csproj", "{C9A9FB49-9DE7-4BA9-BA17-B103F2A42DF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlocks.Core", "src\BuildingBlocks.Core\BuildingBlocks.Core.csproj", "{C9A9FB49-9DE7-4BA9-BA17-B103F2A42DF3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3CC736C6-12BD-4D38-8AB3-993CFE85068A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlocks.Domain.Tests", "test\BuildingBlocks.Domain.Tests\BuildingBlocks.Domain.Tests.csproj", "{CC19CF3B-EC39-44E3-9ABB-E4BC3781A948}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlocks.Core.Tests", "test\BuildingBlocks.Core.Tests\BuildingBlocks.Core.Tests.csproj", "{CC19CF3B-EC39-44E3-9ABB-E4BC3781A948}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
