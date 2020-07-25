@@ -24,8 +24,11 @@ namespace BuildingBlocks.Http
                     }
                 );
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(exception.Message);
+                Console.ResetColor();
                 return default(TData);
             }
         }
