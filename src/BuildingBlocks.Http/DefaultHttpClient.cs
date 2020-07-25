@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace BuildingBlocks.Http
 {
-    public sealed class DefaultClient : IClient
+    public sealed class DefaultHttpClient : IHttpClient
     {
         #region Attributes
         
@@ -22,7 +22,7 @@ namespace BuildingBlocks.Http
 
         #region Life Cycle
 
-        public DefaultClient(
+        public DefaultHttpClient(
             IDeserialize deserialize,
             IHttpContextAccessor httpContextAccessor
         )

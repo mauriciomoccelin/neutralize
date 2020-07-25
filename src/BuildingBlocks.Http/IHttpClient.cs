@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace BuildingBlocks.Http
 {
-    public interface IClient : IDisposable
+    public interface IHttpClient : IDisposable
     {
         #region Get
         Task<Result<TData>> GetAsync<TData>(
