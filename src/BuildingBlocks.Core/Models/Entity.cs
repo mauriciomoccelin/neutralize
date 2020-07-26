@@ -31,14 +31,10 @@ namespace BuildingBlocks.Core.Models
             return a.Equals(b);
         }
 
-        public static bool operator !=(Entity<TEntity, TId> a, Entity<TEntity, TId> b) => !(a == b);
-
-        public override int GetHashCode() => (GetType().GetHashCode() * 96) + Id.GetHashCode();
-
-        public override string ToString() => GetType().Name + " [Id=" + Id + "]";
-
-        public static TEntity Empty() => empty = empty ?? Activator.CreateInstance(typeof(TEntity), true) as TEntity;
-
         public bool IsEmpty() => Equals(empty);
+        public override string ToString() => GetType().Name + " [Id=" + Id + "]";
+        public override int GetHashCode() => (GetType().GetHashCode() * 96) + Id.GetHashCode();
+        public static bool operator !=(Entity<TEntity, TId> a, Entity<TEntity, TId> b) => !(a == b);
+        public static TEntity Empty() => empty ??= Activator.CreateInstance(typeof(TEntity), true) as TEntity;
     }
 }
