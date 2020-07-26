@@ -2,17 +2,20 @@ using System.Threading;
 using System.Threading.Tasks;
 using BuildingBlocks.Core.Bus;
 using BuildingBlocks.Core.Notifications;
+using BuildingBlocks.Core.UoW;
 using MediatR;
 
 namespace BuildingBlocks.Core.Events
 {
     public abstract class EventHandler<TEvent> : INotificationHandler<TEvent> where TEvent : Event
     {
-        protected readonly IInMemoryBus InMemoryBus;
+        protected IUnitOfWork UnitOfWork { get; }
+        protected IInMemoryBus InMemoryBus { get; }
 
-        protected EventHandler(IInMemoryBus inMemoryBus)
+        protected EventHandler(IUnitOfWork unitOfWork, IInMemoryBus inMemoryBus)
         {
-            this.InMemoryBus = inMemoryBus;
+            UnitOfWork = unitOfWork;
+            InMemoryBus = inMemoryBus;
         }
 
         protected virtual async Task AddNotificationError(
