@@ -9,18 +9,18 @@ namespace BuildingBlocks.Core.Commands
 {
     public abstract class CommandHandler : IDisposable
     {
-        private readonly IUnitOfWork unitOfWork;
-        private readonly IInMemoryBus inMemoryBus;
-        private readonly DomainNotificationHandler notifications;
+        protected IUnitOfWork UnitOfWork { get; }
+        protected IInMemoryBus InMemoryBus { get; }
+        protected DomainNotificationHandler Notifications { get; }
 
         protected CommandHandler(
             IUnitOfWork unitOfWork,
             IInMemoryBus inMemoryBus,
             INotificationHandler<DomainNotification> notifications)
         {
-            this.unitOfWork = unitOfWork;
-            this.inMemoryBus = inMemoryBus;
-            this.notifications = notifications as DomainNotificationHandler;
+            UnitOfWork = unitOfWork;
+            InMemoryBus = inMemoryBus;
+            Notifications = notifications as DomainNotificationHandler;
         }
 
         protected virtual async Task CheckErrors(
@@ -31,26 +31,31 @@ namespace BuildingBlocks.Core.Commands
 
             foreach (var error in command.ValidationResult.Errors)
             {
-                await inMemoryBus.RaiseEvent(
-                    DomainNotification.Create(command.MessageType, error.ErrorMessage)
-                );
+                await AddNotificationError(command.MessageType, error.ErrorMessage);
             }
         }
-
+        
         public virtual async Task<bool> Commit()
         {
-            if (notifications.HasNotifications()) return false;
+            if (Notifications.HasNotifications()) return false;
             
-            var commit = await unitOfWork.Commit();
+            var commit = await UnitOfWork.Commit();
             
             if (commit is false)
             {
-                await inMemoryBus.RaiseEvent(
-                    DomainNotification.Create("Commit", "We had a problem during saving your data.")
+                await AddNotificationError(
+                    "Commit", "We had a problem during saving your data."
                 );
             }
 
             return true;
+        }
+        
+        protected virtual async Task AddNotificationError(
+            string type, string message
+        )
+        {
+            await InMemoryBus.RaiseEvent(DomainNotification.Create(type, message));
         }
 
         public abstract void Dispose();
