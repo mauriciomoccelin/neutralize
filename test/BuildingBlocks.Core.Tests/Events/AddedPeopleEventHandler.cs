@@ -3,16 +3,19 @@ using System.Threading.Tasks;
 using BuildingBlocks.Core.Events;
 using BuildingBlocks.Core.Bus;
 using BuildingBlocks.Core.Tests.Models;
-using MediatR;
+using BuildingBlocks.Core.UoW;
 
 namespace BuildingBlocks.Core.Tests.Events
 {
     public class AddedPeopleEventHandler : EventHandler<AddedPeopleEvent>
     {
-        public AddedPeopleEventHandler(IInMemoryBus inMemoryBus) : base(inMemoryBus)
+        public AddedPeopleEventHandler(
+            IUnitOfWork unitOfWork, 
+            IInMemoryBus inMemoryBus
+        ) : base(unitOfWork, inMemoryBus)
         {
         }
-
+        
         public override async Task Handle(
             AddedPeopleEvent data,
             CancellationToken cancellationToken
@@ -25,10 +28,8 @@ namespace BuildingBlocks.Core.Tests.Events
                 await AddNotificationError("AddedPeopleEvent", "People is empty.");
                 return;
             }
-            else
-            {
-                people.AlterName("New Name");
-            }
+
+            people.AlterName("New Name");
         }
     }
 }
