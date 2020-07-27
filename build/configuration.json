@@ -2,5 +2,9 @@
     {
         "path": "src/BuildingBlocks.Core/BuildingBlocks.Core.csproj",
         "version": "1.1.1"
+    },
+    {
+        "path": "src/BuildingBlocks.Application/BuildingBlocks.Application.csproj",
+        "version": "1.1.1"
     }
 ]
