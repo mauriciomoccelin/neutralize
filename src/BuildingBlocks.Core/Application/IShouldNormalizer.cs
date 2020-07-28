@@ -1,4 +1,4 @@
-﻿namespace BuildingBlocks.Application
+﻿namespace BuildingBlocks.Core.Application
 {
     public interface IShouldNormalizer
     {
