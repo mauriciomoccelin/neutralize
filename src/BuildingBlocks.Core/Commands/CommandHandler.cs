@@ -46,6 +46,8 @@ namespace BuildingBlocks.Core.Commands
                 await AddNotificationError(
                     "Commit", "We had a problem during saving your data."
                 );
+                
+                return false;
             }
 
             return true;
