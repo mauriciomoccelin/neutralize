@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BuildingBlocks.Core.Models;
 using BuildingBlocks.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,50 +8,53 @@ namespace BuildingBlocks.Data.EFCore
 {
     public abstract class EFCoreRepository<TDbContext, TEntity, TId> : 
         IEFCoreRepository<TEntity, TId> where TDbContext: DbContext 
-        where TEntity : class 
+        where TEntity : Entity<TEntity, TId>
         where TId : struct
     {
-        protected TDbContext Db { get; }
+        protected TDbContext EfCoreDb { get; }
         protected DbSet<TEntity> DbSet { get; }
 
-        protected EFCoreRepository(TDbContext db)
+        protected EFCoreRepository(TDbContext efCoreDb)
         {
-            Db = db;
-            DbSet = Db.Set<TEntity>();
+            EfCoreDb = efCoreDb;
+            DbSet = EfCoreDb.Set<TEntity>();
         }
 
         public void Dispose()
         {
-            Db.Dispose();
+            EfCoreDb.Dispose();
         }
-        
-        public virtual async Task<TEntity> GetByIdAsync(TId id) => await DbSet.FindAsync(id);
-        
-        public virtual Task<IQueryable<TEntity>> GetAll() => Task.FromResult(DbSet.AsQueryable());
-        
-        public virtual Task RemoveAsync(TEntity entity) => Task.FromResult(DbSet.Remove(entity));
-        
-        public virtual Task AddAsync(TEntity entity) => Task.FromResult(DbSet.Add(entity));
 
-        public virtual Task UpdateAsync(TEntity entity) => Task.FromResult(DbSet.Update(entity));
+        public async Task<bool> Commit()
+        {
+            return await EfCoreDb.SaveChangesAsync() > 0;
+        }
 
-        public virtual Task UpdateRangeAsync(IEnumerable<TEntity> entity)
+        public virtual async Task<TEntity> GetByIdAsync(TId id)
         {
-            DbSet.RemoveRange(entity);
-            return Task.CompletedTask;
+            return await DbSet.FindAsync(id);
         }
-        
-        public virtual Task AddRangeAsync(IEnumerable<TEntity> entity)
+
+        public virtual Task<IQueryable<TEntity>> GetAll()
         {
-            return DbSet.AddRangeAsync(entity);
+            return Task.FromResult(DbSet.AsQueryable());
         }
-        
-        public virtual Task RemoveRangeAsync(IEnumerable<TEntity> entity)
+
+        public virtual Task RemoveAsync(TEntity entity)
         {
-            DbSet.UpdateRange(entity);
-            return Task.CompletedTask;
+            return Task.FromResult(DbSet.Remove(entity));
         }
-        
-        public Task<int> SaveChangesAsync() => Db.SaveChangesAsync();
+
+        public virtual Task AddAsync(TEntity entity)
+        {
+            return Task.FromResult(DbSet.Add(entity));
+        }
+
+        public virtual Task UpdateAsync(TEntity entity)
+        {
+            return Task.FromResult(DbSet.Update(entity));
+        }
+
+        public Task<int> SaveChangesAsync() => EfCoreDb.SaveChangesAsync();
     }
 }

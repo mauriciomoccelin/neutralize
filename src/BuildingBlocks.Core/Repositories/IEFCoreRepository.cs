@@ -1,15 +1,14 @@
+using System.Linq;
 using System.Threading.Tasks;
+using BuildingBlocks.Core.Models;
 
 namespace BuildingBlocks.Core.Repositories
 {
-    /// <summary>
-    /// Base interface for custom repositories of the EF Core.
-    /// </summary>
-    /// <typeparam name="TEntity">Entity type</typeparam>
-    /// <typeparam name="TId">Primary key type of the entity</typeparam>
-    public interface IEFCoreRepository<TEntity, in TId> 
-        : IRepository<TEntity, TId> where TEntity: class where TId: struct
+    public interface IEFCoreRepository<TEntity, in TId> : IRepository<TEntity, TId>
+        where TEntity : Entity<TEntity, TId>
+        where TId : struct
     {
-        Task<int> SaveChangesAsync();
+        Task<bool> Commit();
+        Task<IQueryable<TEntity>> GetAll();
     }
 }

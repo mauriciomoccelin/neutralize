@@ -1,14 +1,15 @@
-﻿using System;
-using System.Data;
+﻿using System.Collections.Generic;
+using System.Data.Common;
 using System.Threading.Tasks;
+using BuildingBlocks.Core.Models;
 
 namespace BuildingBlocks.Core.Repositories
 {
-    public interface IDapperRepository<out TParameter>
+    public interface IDapperRepository<TEntity, in TId> : IRepository<TEntity, TId> 
+        where TEntity : Entity<TEntity, TId> 
+        where TId : struct
     {
-        TParameter Parameters { get; }
-        IDbConnection Connection { get; }
-        void AddParameter(string name, object value);
-        Task<T> ConnectionWrapper<T>(Func<IDbConnection, Task<T>> func);
+        DbConnection Connection { get; }
+        Task<IEnumerable<TEntity>> GetAll();
     }
 }

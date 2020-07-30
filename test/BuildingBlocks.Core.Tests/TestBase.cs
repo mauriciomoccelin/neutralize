@@ -24,6 +24,6 @@ namespace BuildingBlocks.Core.Tests
             provider = services.BuildServiceProvider();
         }
 
-        public T Resolve<T>() { return provider.GetRequiredService<T>(); }
+        protected T Resolve<T>() { return provider.GetRequiredService<T>(); }
     }
 }
