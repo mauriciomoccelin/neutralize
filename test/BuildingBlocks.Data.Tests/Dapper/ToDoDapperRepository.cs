@@ -6,7 +6,6 @@ namespace BuildingBlocks.Data.Tests.Dapper
     {
         public ToDoDapperRepository(DbConnection connection) : base(connection)
         {
-            connection.Open();
         }
     }
 }
