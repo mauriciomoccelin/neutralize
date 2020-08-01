@@ -7,7 +7,7 @@ namespace BuildingBlocks.Core.Models
         where TId : struct
     {
         private static TEntity empty;
-        public TId Id { get; protected set; }
+        public TId Id { get; set; }
 
         protected Entity() { }
         protected Entity(TId id) { Id = id; }

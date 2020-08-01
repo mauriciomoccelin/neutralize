@@ -11,6 +11,6 @@ namespace BuildingBlocks.Core.Repositories
         Task AddAsync(TEntity entity);
         Task RemoveAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
-        Task<TEntity> GetByIdAsync(TId id);
+        Task<TEntity> GetAsync(TId id);
     }
 }

@@ -11,7 +11,7 @@ namespace BuildingBlocks.Data.Tests.Entities
         {
             Table("ToDos");
 
-            Map(x => x.Id);
+            Map(x => x.Id).Key(KeyType.Assigned);
             Map(x => x.Done);
             Map(x => x.Description);
         }

@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using BuildingBlocks.Core.Models;
 
 namespace BuildingBlocks.Data.Tests.Entities
@@ -18,5 +17,6 @@ namespace BuildingBlocks.Data.Tests.Entities
         }
 
         public void MarkAsDone() => Done = true;
+        public void ChangeDescription(string newDescription) => Description = newDescription;
     }
 }

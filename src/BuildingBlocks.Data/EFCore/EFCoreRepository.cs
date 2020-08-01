@@ -30,7 +30,7 @@ namespace BuildingBlocks.Data.EFCore
             return await EfCoreDb.SaveChangesAsync() > 0;
         }
 
-        public virtual async Task<TEntity> GetByIdAsync(TId id)
+        public virtual async Task<TEntity> GetAsync(TId id)
         {
             return await DbSet.FindAsync(id);
         }

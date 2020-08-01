@@ -14,7 +14,7 @@ namespace BuildingBlocks.Data.Tests.EFCore
         }
 
         [Fact]
-        public async void Add_Test()
+        public async void Test()
         {
             // Act
             var todo = new ToDo(0, true, "Lorem Ipsum");
@@ -24,7 +24,7 @@ namespace BuildingBlocks.Data.Tests.EFCore
             result.Should().BeTrue();
             
             // Act
-            var todoGetById = await repository.GetByIdAsync(todo.Id);
+            var todoGetById = await repository.GetAsync(todo.Id);
             // Assert
             todoGetById.Should().NotBeNull();
 
@@ -42,7 +42,7 @@ namespace BuildingBlocks.Data.Tests.EFCore
             result.Should().BeTrue();
             
             // Act
-            todoGetById = await repository.GetByIdAsync(todo.Id);
+            todoGetById = await repository.GetAsync(todo.Id);
             // Assert
             todoGetById.Should().BeNull();
         }
