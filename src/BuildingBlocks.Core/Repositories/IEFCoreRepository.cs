@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -11,8 +12,9 @@ namespace BuildingBlocks.Core.Repositories
         where TId : struct
     {
         Task<bool> Commit();
-        Task<IQueryable<TEntity>> GetAll();
+        IQueryable<TEntity> GetAll();
         Task<long> CountAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> FirstOrAsync(Expression<Func<TEntity, bool>> predicate, TEntity @default = null);
     }
 }

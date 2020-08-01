@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -8,8 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BuildingBlocks.EFCore
 {
-    public abstract class EFCoreRepository<TDbContext, TEntity, TId> : 
-        IEFCoreRepository<TEntity, TId> where TDbContext: DbContext 
+    public abstract class EFCoreRepository<TDbContext, TEntity, TId> :
+        IEFCoreRepository<TEntity, TId> where TDbContext : DbContext
         where TEntity : Entity<TEntity, TId>
         where TId : struct
     {
@@ -32,14 +33,14 @@ namespace BuildingBlocks.EFCore
             return await Context.SaveChangesAsync() > 0;
         }
 
-        public virtual async Task<TEntity> GetAsync(TId id)
+        public async Task<TEntity> GetAsync(TId id)
         {
             return await DbSet.FindAsync(id);
         }
 
-        public virtual Task<IQueryable<TEntity>> GetAll()
+        public IQueryable<TEntity> GetAll()
         {
-            return Task.FromResult(DbSet.AsQueryable());
+            return DbSet.AsQueryable();
         }
 
         public Task<long> CountAsync(
@@ -49,8 +50,16 @@ namespace BuildingBlocks.EFCore
             return DbSet.LongCountAsync(predicate);
         }
 
+        public async Task<IEnumerable<TEntity>> GetListAsync(
+            Expression<Func<TEntity, bool>> predicate
+        )
+        {
+            var query = DbSet.Where(predicate);
+            return await query.ToListAsync();
+        }
+
         public Task<TEntity> FirstOrAsync(
-            Expression<Func<TEntity, bool>> predicate, 
+            Expression<Func<TEntity, bool>> predicate,
             TEntity @default = default(TEntity)
         )
         {
