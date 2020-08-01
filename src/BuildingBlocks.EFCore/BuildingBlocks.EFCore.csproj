@@ -2,6 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
+        <Version>1.1.0</Version>
+        <IsPackable>true</IsPackable>
+        <Description>.NET BuildingBlocks EFCore</Description>
+        <Authors>Mauricio Moccelin</Authors>
+        <Company>Ittech</Company>
+        <PackageTags>BuildingBlocks.EFCore</PackageTags>
+        <RepositoryType>GIT</RepositoryType>
     </PropertyGroup>
 
     <ItemGroup>
