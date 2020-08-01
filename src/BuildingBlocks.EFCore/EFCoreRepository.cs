@@ -1,33 +1,35 @@
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BuildingBlocks.Core.Models;
 using BuildingBlocks.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace BuildingBlocks.Data.EFCore
+namespace BuildingBlocks.EFCore
 {
     public abstract class EFCoreRepository<TDbContext, TEntity, TId> : 
         IEFCoreRepository<TEntity, TId> where TDbContext: DbContext 
         where TEntity : Entity<TEntity, TId>
         where TId : struct
     {
-        protected TDbContext EfCoreDb { get; }
+        protected TDbContext Context { get; }
         protected DbSet<TEntity> DbSet { get; }
 
-        protected EFCoreRepository(TDbContext efCoreDb)
+        protected EFCoreRepository(TDbContext context)
         {
-            EfCoreDb = efCoreDb;
-            DbSet = EfCoreDb.Set<TEntity>();
+            Context = context;
+            DbSet = Context.Set<TEntity>();
         }
 
         public void Dispose()
         {
-            EfCoreDb.Dispose();
+            Context.Dispose();
         }
 
         public async Task<bool> Commit()
         {
-            return await EfCoreDb.SaveChangesAsync() > 0;
+            return await Context.SaveChangesAsync() > 0;
         }
 
         public virtual async Task<TEntity> GetAsync(TId id)
@@ -38,6 +40,22 @@ namespace BuildingBlocks.Data.EFCore
         public virtual Task<IQueryable<TEntity>> GetAll()
         {
             return Task.FromResult(DbSet.AsQueryable());
+        }
+
+        public Task<long> CountAsync(
+            Expression<Func<TEntity, bool>> predicate
+        )
+        {
+            return DbSet.LongCountAsync(predicate);
+        }
+
+        public Task<TEntity> FirstOrAsync(
+            Expression<Func<TEntity, bool>> predicate, 
+            TEntity @default = default(TEntity)
+        )
+        {
+            var entity = DbSet.Where(predicate).FirstOrDefault();
+            return Task.FromResult(entity ?? @default);
         }
 
         public virtual Task RemoveAsync(TEntity entity)
@@ -55,6 +73,6 @@ namespace BuildingBlocks.Data.EFCore
             return Task.FromResult(DbSet.Update(entity));
         }
 
-        public Task<int> SaveChangesAsync() => EfCoreDb.SaveChangesAsync();
+        public Task<int> SaveChangesAsync() => Context.SaveChangesAsync();
     }
 }

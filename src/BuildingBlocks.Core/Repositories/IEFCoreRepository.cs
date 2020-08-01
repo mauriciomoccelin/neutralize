@@ -1,4 +1,6 @@
+using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BuildingBlocks.Core.Models;
 
@@ -10,5 +12,7 @@ namespace BuildingBlocks.Core.Repositories
     {
         Task<bool> Commit();
         Task<IQueryable<TEntity>> GetAll();
+        Task<long> CountAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<TEntity> FirstOrAsync(Expression<Func<TEntity, bool>> predicate, TEntity @default = null);
     }
 }

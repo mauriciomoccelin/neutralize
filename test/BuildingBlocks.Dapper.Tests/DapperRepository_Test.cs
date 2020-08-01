@@ -1,10 +1,10 @@
-using BuildingBlocks.Data.Tests.Entities;
+using BuildingBlocks.Test.Entities;
 using FluentAssertions;
 using Xunit;
 
-namespace BuildingBlocks.Data.Tests.Dapper
+namespace BuildingBlocks.Dapper.Tests
 {
-    public class DapperRepository_Test : BuildingBlocksDataTestBase
+    public class DapperRepository_Test : DapperBaseTest
     {
         private readonly IToDoDapperRepository repository;
         
@@ -13,8 +13,8 @@ namespace BuildingBlocks.Data.Tests.Dapper
             repository = Resolve<IToDoDapperRepository>();
         }
 
-        [Fact]
-        public async void Test()
+        [Fact(DisplayName = "Test for: Dapper Repository")]
+        public async void Test_Dapper_Repository()
         {
             // Act
             await repository.AddAsync(new ToDo(1, true, "DOLOR IPSUM"));

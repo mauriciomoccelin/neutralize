@@ -11,7 +11,6 @@ namespace BuildingBlocks.Core.Tests
     public abstract class TestBase
     {
         private readonly IServiceProvider provider;
-
         protected TestBase()
         {
             IServiceCollection services = new ServiceCollection();

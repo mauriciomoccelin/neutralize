@@ -1,20 +1,20 @@
-using BuildingBlocks.Data.Tests.Entities;
+using BuildingBlocks.Test.Entities;
 using FluentAssertions;
 using Xunit;
 
-namespace BuildingBlocks.Data.Tests.EFCore
+namespace BuildingBlocks.EFCore.Tests
 {
-    public class EfCoreRepositoryBuildingBlocksDataTest : BuildingBlocksDataTestBase
+    public class EfCoreRepositoryEfCore : EFCoreBaseBase
     {
         private readonly ITodoRepository repository;
         
-        public EfCoreRepositoryBuildingBlocksDataTest()
+        public EfCoreRepositoryEfCore()
         {
             repository = Resolve<ITodoRepository>();
         }
 
-        [Fact]
-        public async void Test()
+        [Fact(DisplayName = "Test for: Entity Framework Core Repository")]
+        public async void Test_Entity_Framework_Core_Repository()
         {
             // Act
             var todo = new ToDo(0, true, "Lorem Ipsum");

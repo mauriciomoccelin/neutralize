@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace BuildingBlocks.Data.Dapper.Extensions.Filters
+namespace BuildingBlocks.Dapper.Extensions.Filters
 {
     /// <summary>
     /// Reference

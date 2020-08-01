@@ -1,6 +1,7 @@
+using BuildingBlocks.Test.Entities;
 using DapperExtensions.Mapper;
 
-namespace BuildingBlocks.Data.Tests.Entities
+namespace BuildingBlocks.Dapper.Tests
 {
     /// <summary>
     /// Class form Dapper Extensions mapper queries 

@@ -1,6 +1,6 @@
 using System.Data.Common;
 
-namespace BuildingBlocks.Data.Tests.Dapper
+namespace BuildingBlocks.Dapper.Tests
 {
     public class ToDoDapperRepository : SqLiteDapperRepository, IToDoDapperRepository
     {

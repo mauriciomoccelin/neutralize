@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using BuildingBlocks.Core.UoW;
-using BuildingBlocks.Data.Tests.Entities;
+using BuildingBlocks.Test.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BuildingBlocks.Data.Tests.EFCore
+namespace BuildingBlocks.EFCore.Tests
 {
     public class EfCoreDbContext : DbContext, IUnitOfWork
     {

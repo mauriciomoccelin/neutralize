@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using DapperExtensions;
 
-namespace BuildingBlocks.Data.Dapper.Extensions.Sort
+namespace BuildingBlocks.Dapper.Extensions.Sort
 {
     internal static class SortingExtensions
     {

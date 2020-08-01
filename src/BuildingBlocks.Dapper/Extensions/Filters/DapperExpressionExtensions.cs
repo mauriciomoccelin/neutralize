@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using BuildingBlocks.Core.Models;
 using DapperExtensions;
 
-namespace BuildingBlocks.Data.Dapper.Extensions.Filters
+namespace BuildingBlocks.Dapper.Extensions.Filters
 {
     public static class DapperExpressionExtensions
     {

@@ -6,12 +6,12 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BuildingBlocks.Core.Models;
 using BuildingBlocks.Core.Repositories;
-using BuildingBlocks.Data.Dapper.Extensions.Filters;
-using BuildingBlocks.Data.Dapper.Extensions.Sort;
+using BuildingBlocks.Dapper.Extensions.Filters;
+using BuildingBlocks.Dapper.Extensions.Sort;
 using Dapper;
 using DapperExtensions;
 
-namespace BuildingBlocks.Data.Dapper
+namespace BuildingBlocks.Dapper
 {
     public abstract class DapperRepository<TEntity, TId> : IDapperRepository<TEntity, TId> 
         where TEntity : Entity<TEntity, TId>

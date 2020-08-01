@@ -1,7 +1,7 @@
 using BuildingBlocks.Core.Repositories;
-using BuildingBlocks.Data.Tests.Entities;
+using BuildingBlocks.Test.Entities;
 
-namespace BuildingBlocks.Data.Tests.EFCore
+namespace BuildingBlocks.EFCore.Tests
 {
     public interface ITodoRepository : IEFCoreRepository<ToDo, int>
     {

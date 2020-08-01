@@ -1,40 +1,32 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Reflection;
-using BuildingBlocks.Data.Tests.Dapper;
-using BuildingBlocks.Data.Tests.EFCore;
 using BuildingBlocks.Test;
 using Dapper;
 using DapperExtensions.Sql;
 using Microsoft.Data.Sqlite;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BuildingBlocks.Data.Tests
+namespace BuildingBlocks.Dapper.Tests
 {
-    public abstract class BuildingBlocksDataTestBase : TestBase
+    public abstract class DapperBaseTest : TestBase
     {
-        protected BuildingBlocksDataTestBase()
+        protected DapperBaseTest()
         {
-            // Setup In Memory Database
-            services.AddDbContext<EfCoreDbContext>(
-                option => option.UseInMemoryDatabase("Test")
-            );
-            
             // Setup Dapper Database
 
             DapperExtensions.DapperExtensions.Configure(
-                typeof(BuildingBlocksDataTestBase), 
-                new List<Assembly>() {typeof(BuildingBlocksDataTestBase).Assembly }, 
+                typeof(DapperBaseTest), 
+                new List<Assembly>() {typeof(DapperBaseTest).Assembly }, 
                 new SqliteDialect()
             );
 
             services.AddScoped<DbConnection>(sp =>
             {
-                var connection = new SqliteConnection("Data Source=Contatos.db");
+                var connection = new SqliteConnection("Data Source=Tests.db");
                 connection.Open();
                 connection.Execute(@"
-                    DROP TABLE ToDos;
+                    DROP TABLE IF EXISTS ToDos;
                     CREATE TABLE IF NOT EXISTS ToDos (
 	                    Id PRIMARY KEY,
 	                    Description TEXT NULL,
@@ -44,12 +36,8 @@ namespace BuildingBlocks.Data.Tests
 
                 return connection;
             });
-
-            // Register DB Context Provider
-            services.AddScoped<EfCoreDbContext>();
             
-            // Register repositories 
-            services.AddScoped<ITodoRepository, TodoRepository>();
+            // Register repositories
             services.AddScoped<IToDoDapperRepository, ToDoDapperRepository>();
             
             // build service provider

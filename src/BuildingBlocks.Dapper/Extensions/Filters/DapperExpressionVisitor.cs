@@ -6,7 +6,7 @@ using System.Reflection;
 using BuildingBlocks.Core.Models;
 using DapperExtensions;
 
-namespace BuildingBlocks.Data.Dapper.Extensions.Filters
+namespace BuildingBlocks.Dapper.Extensions.Filters
 {
     internal class DapperExpressionVisitor<TEntity, TId> : ExpressionVisitor
         where TEntity : Entity<TEntity, TId> where TId: struct

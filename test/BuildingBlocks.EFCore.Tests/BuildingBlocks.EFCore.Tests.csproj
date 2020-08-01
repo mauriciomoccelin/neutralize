@@ -4,6 +4,8 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
 
         <IsPackable>false</IsPackable>
+
+        <RootNamespace>BuildingBlocks.EFCore.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\BuildingBlocks.Data\BuildingBlocks.Data.csproj" />
+      <ProjectReference Include="..\..\src\BuildingBlocks.EFCore\BuildingBlocks.EFCore.csproj" />
       <ProjectReference Include="..\BuildingBlocks.Test\BuildingBlocks.Test.csproj" />
     </ItemGroup>
 

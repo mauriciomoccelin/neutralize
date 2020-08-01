@@ -1,6 +1,6 @@
 using BuildingBlocks.Core.Models;
 
-namespace BuildingBlocks.Data.Tests.Entities
+namespace BuildingBlocks.Test.Entities
 {
     public class ToDo : Entity<ToDo, int>
     {
