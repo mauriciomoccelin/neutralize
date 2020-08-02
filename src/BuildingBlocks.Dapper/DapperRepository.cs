@@ -13,7 +13,7 @@ using DapperExtensions;
 
 namespace BuildingBlocks.Dapper
 {
-    public abstract class DapperRepository<TEntity, TId> : IDapperRepository<TEntity, TId> 
+    public abstract class DapperRepository<TEntity, TId> : IDapperRepository<TEntity, TId>
         where TEntity : Entity<TEntity, TId>
         where TId : struct
     {
@@ -34,14 +34,14 @@ namespace BuildingBlocks.Dapper
             return enumerable.Any() ? enumerable.First() : @default;
         }
 
-        public  DynamicParameters Parameters { get; }
+        public DynamicParameters Parameters { get; }
 
         protected DapperRepository(DbConnection connection)
         {
             Connection = connection;
             Parameters = new DynamicParameters();
         }
-        
+
         public void Dispose()
         {
             Connection.Dispose();
@@ -60,7 +60,7 @@ namespace BuildingBlocks.Dapper
             var result = Connection.Count<TEntity>(_predicate);
             return Task.FromResult<long>(result);
         }
-        
+
         public Task<IEnumerable<TEntity>> GetAllAsync()
         {
             var result = Connection.GetList<TEntity>();
@@ -68,9 +68,9 @@ namespace BuildingBlocks.Dapper
         }
 
         public Task<IEnumerable<TEntity>> GetAllPagedAsync(
-            int page, 
+            int page,
             int itemsPerPage,
-            Expression<Func<TEntity, bool>> predicate, 
+            Expression<Func<TEntity, bool>> predicate,
             bool ascending = true,
             params Expression<Func<TEntity, object>>[] sort
         )
@@ -79,7 +79,7 @@ namespace BuildingBlocks.Dapper
             var _predicate = predicate.ToPredicateGroup<TEntity, TId>();
 
             var result = Connection.GetPage<TEntity>(_predicate, _sort, page, itemsPerPage);
-            
+
             return Task.FromResult(result);
         }
 
@@ -91,9 +91,9 @@ namespace BuildingBlocks.Dapper
         {
             var _sort = sort.ToSortable<TEntity>(ascending).ToList();
             var _predicate = predicate.ToPredicateGroup<TEntity, TId>();
-            
+
             var result = Connection.GetList<TEntity>(_predicate, _sort);
-            
+
             return Task.FromResult(result);
         }
 
@@ -112,7 +112,7 @@ namespace BuildingBlocks.Dapper
         public Task UpdateAsync(TEntity entity)
         {
             Connection.Update(entity);
-            return Task.CompletedTask;         
+            return Task.CompletedTask;
         }
     }
 }

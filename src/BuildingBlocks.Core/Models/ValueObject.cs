@@ -1,6 +1,6 @@
 ﻿namespace BuildingBlocks.Core.Models
 {
-    public abstract class ValueObject<T> where T : ValueObject<T>
+    public abstract class ValueObject<T> where T : class
     {
         protected ValueObject() { }
 

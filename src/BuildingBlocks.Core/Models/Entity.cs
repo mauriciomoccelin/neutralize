@@ -3,7 +3,7 @@
 namespace BuildingBlocks.Core.Models
 {
     public abstract class Entity<TEntity, TId>
-        where TEntity : Entity<TEntity, TId>
+        where TEntity : class
         where TId : struct
     {
         private static TEntity empty;
