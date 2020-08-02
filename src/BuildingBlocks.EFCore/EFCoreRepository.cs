@@ -30,7 +30,8 @@ namespace BuildingBlocks.EFCore
 
         public async Task<bool> Commit()
         {
-            return await Context.SaveChangesAsync() > 0;
+            var success = await Context.SaveChangesAsync() > 0;
+            return success;
         }
 
         public async Task<TEntity> GetAsync(TId id)
@@ -81,7 +82,5 @@ namespace BuildingBlocks.EFCore
         {
             return Task.FromResult(DbSet.Update(entity));
         }
-
-        public Task<int> SaveChangesAsync() => Context.SaveChangesAsync();
     }
 }
