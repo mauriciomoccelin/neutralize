@@ -10,12 +10,11 @@ namespace BuildingBlocks.Core.Tests.Events
     public class AddedPeopleEventHandler : EventHandler<AddedPeopleEvent>
     {
         public AddedPeopleEventHandler(
-            IUnitOfWork unitOfWork, 
             IInMemoryBus inMemoryBus
-        ) : base(unitOfWork, inMemoryBus)
+        ) : base(inMemoryBus)
         {
         }
-        
+
         public override async Task Handle(
             AddedPeopleEvent data,
             CancellationToken cancellationToken

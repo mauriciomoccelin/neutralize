@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using BuildingBlocks.Core.Commands;
 using BuildingBlocks.Core.Bus;
 using BuildingBlocks.Core.Notifications;
-using BuildingBlocks.Core.UoW;
 using MediatR;
 using Optional;
 
@@ -13,10 +12,9 @@ namespace BuildingBlocks.Core.Tests.Commands
     public class AddProductCommandHandler : CommandHandler, IRequestHandler<AddProductCommand, Option<string>>
     {
         public AddProductCommandHandler(
-            IUnitOfWork unitOfWork,
             IInMemoryBus inMemoryBus,
             INotificationHandler<DomainNotification> notifications
-        ) : base(unitOfWork, inMemoryBus, notifications)
+        ) : base(inMemoryBus, notifications)
         {
         }
 

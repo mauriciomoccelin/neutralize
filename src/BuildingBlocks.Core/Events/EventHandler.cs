@@ -2,19 +2,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using BuildingBlocks.Core.Bus;
 using BuildingBlocks.Core.Notifications;
-using BuildingBlocks.Core.UoW;
 using MediatR;
 
 namespace BuildingBlocks.Core.Events
 {
     public abstract class EventHandler<TEvent> : INotificationHandler<TEvent> where TEvent : Event
     {
-        protected IUnitOfWork UnitOfWork { get; }
         protected IInMemoryBus InMemoryBus { get; }
 
-        protected EventHandler(IUnitOfWork unitOfWork, IInMemoryBus inMemoryBus)
+        protected EventHandler(IInMemoryBus inMemoryBus)
         {
-            UnitOfWork = unitOfWork;
             InMemoryBus = inMemoryBus;
         }
 
