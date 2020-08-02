@@ -10,8 +10,9 @@ namespace BuildingBlocks.Core.Tests.Events
     public class AddedPeopleEventHandler : EventHandler<AddedPeopleEvent>
     {
         public AddedPeopleEventHandler(
+            IUnitOfWork unitOfWork,
             IInMemoryBus inMemoryBus
-        ) : base(inMemoryBus)
+        ) : base(unitOfWork, inMemoryBus)
         {
         }
 

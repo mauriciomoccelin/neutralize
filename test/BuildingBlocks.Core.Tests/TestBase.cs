@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using BuildingBlocks.Core.Bus;
 using BuildingBlocks.Core.Notifications;
+using BuildingBlocks.Core.UoW;
 
 namespace BuildingBlocks.Core.Tests
 {
@@ -15,6 +16,7 @@ namespace BuildingBlocks.Core.Tests
             IServiceCollection services = new ServiceCollection();
             services.AddMediatR(typeof(TestBase).Assembly);
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IInMemoryBus, InMemoryInMemoryBus>();
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 

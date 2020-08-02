@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using BuildingBlocks.Core.Commands;
 using BuildingBlocks.Core.Bus;
 using BuildingBlocks.Core.Notifications;
+using BuildingBlocks.Core.UoW;
 using MediatR;
 
 namespace BuildingBlocks.Core.Tests.Commands
@@ -11,9 +12,10 @@ namespace BuildingBlocks.Core.Tests.Commands
     public class AddPeopleCommandHandler : CommandHandler, IRequestHandler<AddPeopleCommand>
     {
         public AddPeopleCommandHandler(
+            IUnitOfWork unitOfWork,
             IInMemoryBus inMemoryBus,
             INotificationHandler<DomainNotification> notifications
-        ) : base(inMemoryBus, notifications)
+        ) : base(unitOfWork, inMemoryBus, notifications)
         {
         }
 
