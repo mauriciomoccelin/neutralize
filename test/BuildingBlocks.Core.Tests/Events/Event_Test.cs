@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using BuildingBlocks.Core.Bus;
 using BuildingBlocks.Core.Tests.Models;
@@ -6,7 +7,7 @@ using Xunit;
 
 namespace BuildingBlocks.Core.Tests.Events
 {
-    public class Event_Test : TestBase
+    public class Event_Test : BuildingBlocksCoreBaseTest
     {
         private readonly IInMemoryBus _inMemoryBus;
 
@@ -20,6 +21,11 @@ namespace BuildingBlocks.Core.Tests.Events
             _inMemoryBus.Awaiting(b => b.RaiseEvent(addPeopleEvent)).Should().NotThrow();
 
             return Task.CompletedTask;
+        }
+
+        public override void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }

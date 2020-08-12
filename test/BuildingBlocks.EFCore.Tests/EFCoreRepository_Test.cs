@@ -1,10 +1,9 @@
-using BuildingBlocks.Test.Entities;
 using FluentAssertions;
 using Xunit;
 
 namespace BuildingBlocks.EFCore.Tests
 {
-    public class EfCoreRepositoryEfCore : EFCoreBaseBase
+    public class EfCoreRepositoryEfCore : EFCoreBase
     {
         private readonly ITodoRepository repository;
         

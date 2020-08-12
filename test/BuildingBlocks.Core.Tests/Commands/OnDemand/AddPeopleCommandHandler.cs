@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Commands;
 using BuildingBlocks.Core.Bus;
+using BuildingBlocks.Core.Commands;
 using BuildingBlocks.Core.Notifications;
 using BuildingBlocks.Core.UoW;
 using MediatR;
-using Optional;
 
-namespace BuildingBlocks.Core.Tests.Commands
+namespace BuildingBlocks.Core.Tests.Commands.OnDemand
 {
-    public class AddProductCommandHandler : CommandHandler, IRequestHandler<AddProductCommand, Option<string>>
+    public class AddPeopleCommandHandler : CommandHandler, IRequestHandler<AddPeopleCommand>
     {
-        public AddProductCommandHandler(
+        public AddPeopleCommandHandler(
             IUnitOfWork unitOfWork,
             IInMemoryBus inMemoryBus,
             INotificationHandler<DomainNotification> notifications
@@ -22,13 +21,15 @@ namespace BuildingBlocks.Core.Tests.Commands
 
         public override void Dispose() { GC.SuppressFinalize(this); }
 
-        public async Task<Option<string>> Handle(
-            AddProductCommand request,
+        public async Task<Unit> Handle(
+            AddPeopleCommand request,
             CancellationToken cancellationToken
         )
         {
+            request.Validate();
             await CheckErrors(request);
-            return request.IsValid() ? Option.Some("Ok") : Option.None<string>();
+
+            return await Unit.Task;
         }
     }
 }

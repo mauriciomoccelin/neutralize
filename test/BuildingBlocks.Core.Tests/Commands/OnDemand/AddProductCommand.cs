@@ -2,9 +2,9 @@
 using MediatR;
 using Optional;
 
-namespace BuildingBlocks.Core.Tests.Commands
+namespace BuildingBlocks.Core.Tests.Commands.OnDemand
 {
-    public class AddProductCommand : Command, IRequest<Option<string>>
+    public class AddProductCommand : Command, IRequest<string>
     {
         public string Name { get; private set; }
 

@@ -17,7 +17,7 @@ namespace BuildingBlocks.Core.Bus
 
         Task<TResponse> SendCommand<TCommand, TResponse>(
             TCommand command
-        ) where TCommand : Command where TResponse : struct;
+        ) where TCommand : Command where TResponse : class;
 
         Task RaiseEvent<TEvent>(
             TEvent @event

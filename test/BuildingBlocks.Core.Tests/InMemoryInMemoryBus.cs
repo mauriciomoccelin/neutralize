@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BuildingBlocks.Core.Bus;
 using BuildingBlocks.Core.Commands;
 using BuildingBlocks.Core.Events;
-using BuildingBlocks.Core.Bus;
 using MediatR;
 
-namespace BuildingBlocks.Core.Tests.Commands
+namespace BuildingBlocks.Core.Tests
 {
     public sealed class InMemoryInMemoryBus : IInMemoryBus
     {
@@ -31,7 +31,7 @@ namespace BuildingBlocks.Core.Tests.Commands
 
         public Task<TResponse> SendCommand<TCommand, TResponse>(
             TCommand command
-        ) where TCommand : Command where TResponse : struct
+        ) where TCommand : Command where TResponse : class
         {
             return mediator.Send(
                 command as IRequest<TResponse> ?? throw new ArgumentNullException(

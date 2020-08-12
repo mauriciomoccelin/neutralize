@@ -29,7 +29,6 @@ namespace BuildingBlocks.Core.Commands
         )
         {
             command.Validate();
-
             foreach (var error in command.ValidationResult.Errors)
             {
                 await AddNotificationError(command.MessageType, error.ErrorMessage);

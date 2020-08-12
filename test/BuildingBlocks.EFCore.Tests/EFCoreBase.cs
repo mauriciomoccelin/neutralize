@@ -4,9 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace BuildingBlocks.EFCore.Tests
 {
-    public abstract class EFCoreBaseBase : TestBase
+    public abstract class EFCoreBase : TestBase
     {
-        protected EFCoreBaseBase()
+        protected EFCoreBase()
         {
             // Setup In Memory Database
             services.AddDbContext<EfCoreDbContext>(

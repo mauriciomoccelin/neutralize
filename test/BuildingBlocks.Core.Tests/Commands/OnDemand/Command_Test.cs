@@ -1,14 +1,14 @@
-﻿using FluentAssertions;
-using Optional;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Commands;
 using BuildingBlocks.Core.Bus;
+using BuildingBlocks.Core.Commands;
+using FluentAssertions;
 using Xunit;
 
-namespace BuildingBlocks.Core.Tests.Commands
+namespace BuildingBlocks.Core.Tests.Commands.OnDemand
 {
-    public class Command_Test : TestBase
+    public class Command_Test : BuildingBlocksCoreBaseTest
     {
         private readonly IInMemoryBus _inMemoryBus;
 
@@ -28,9 +28,9 @@ namespace BuildingBlocks.Core.Tests.Commands
                 new AddPeopleCommand("lorem ipsum"),
             };
 
-            var responseCommandOne = await _inMemoryBus.SendCommand<AddProductCommand, Option<string>>(commandOne);
-            var responseCommandTwo = await _inMemoryBus.SendCommand<AddProductCommand, Option<string>>(commandTwo);
-            var responseInvalidCommand = await _inMemoryBus.SendCommand<AddProductCommand, Option<string>>(invalidCommand);
+            var responseCommandOne = await _inMemoryBus.SendCommand<AddProductCommand, string>(commandOne);
+            var responseCommandTwo = await _inMemoryBus.SendCommand<AddProductCommand, string>(commandTwo);
+            var responseInvalidCommand = await _inMemoryBus.SendCommand<AddProductCommand, string>(invalidCommand);
 
             // Send may commands
             await _inMemoryBus.SendCommand(commands);
@@ -40,9 +40,14 @@ namespace BuildingBlocks.Core.Tests.Commands
             commandTwo.Validate().Should().BeTrue();
             invalidCommand.Validate().Should().BeFalse();
 
-            responseCommandOne.HasValue.Should().BeTrue();
-            responseCommandTwo.HasValue.Should().BeTrue();
-            responseInvalidCommand.HasValue.Should().BeFalse();
+            responseCommandOne.Should().NotBeNull();
+            responseCommandTwo.Should().NotBeNull();
+            responseInvalidCommand.Should().BeNull();
+        }
+
+        public override void Dispose()
+        {
+            GC.SuppressFinalize(this);
         }
     }
 }

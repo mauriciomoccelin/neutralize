@@ -1,4 +1,3 @@
-using BuildingBlocks.Test.Entities;
 using FluentAssertions;
 using Xunit;
 

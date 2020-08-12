@@ -1,4 +1,3 @@
-using BuildingBlocks.Test.Entities;
 using DapperExtensions.Mapper;
 
 namespace BuildingBlocks.Dapper.Tests

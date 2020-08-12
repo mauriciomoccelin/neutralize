@@ -1,5 +1,3 @@
-using BuildingBlocks.Test.Entities;
-
 namespace BuildingBlocks.EFCore.Tests
 {
     public class TodoRepository : EFCoreRepository<EfCoreDbContext, ToDo, int>, ITodoRepository

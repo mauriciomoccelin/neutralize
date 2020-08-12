@@ -1,5 +1,4 @@
 using BuildingBlocks.Core.Repositories;
-using BuildingBlocks.Test.Entities;
 
 namespace BuildingBlocks.EFCore.Tests
 {

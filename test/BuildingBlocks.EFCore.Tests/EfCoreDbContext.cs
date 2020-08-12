@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using BuildingBlocks.Core.UoW;
-using BuildingBlocks.Test.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildingBlocks.EFCore.Tests

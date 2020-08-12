@@ -1,5 +1,4 @@
 using System.Data.Common;
-using BuildingBlocks.Test.Entities;
 
 namespace BuildingBlocks.Dapper.Tests
 {

@@ -1,8 +1,6 @@
 ﻿using BuildingBlocks.Core.Commands;
-using MediatR;
-using Optional;
 
-namespace BuildingBlocks.Core.Tests.Commands
+namespace BuildingBlocks.Core.Tests.Commands.OnDemand
 {
     public class AddPeopleCommand : Command
     {
