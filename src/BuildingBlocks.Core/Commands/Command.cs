@@ -4,9 +4,13 @@ using FluentValidation.Results;
 
 namespace BuildingBlocks.Core.Commands
 {
-    public abstract class Command : Message
+    public abstract class Command : Command<Guid>
     {
-        public long Id { get; protected set; }
+    }
+    
+    public abstract class Command<TId> : Message
+    {
+        public TId Id { get; protected set; }
         public DateTime Timestamp { get; private set; }
         public ValidationResult ValidationResult { get; protected set; }
 

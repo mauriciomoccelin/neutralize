@@ -1,19 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Bus;
 using BuildingBlocks.Core.Commands;
 using BuildingBlocks.Core.Events;
 using MediatR;
 
-namespace BuildingBlocks.Core.Tests
+namespace BuildingBlocks.Core.Bus
 {
-    public sealed class InMemoryInMemoryBus : IInMemoryBus
+    public sealed class InMemoryBus : IInMemoryBus
     {
         private readonly IMediator mediator;
 
-        public InMemoryInMemoryBus(IMediator mediator) => this.mediator = mediator;
+        public InMemoryBus(IMediator mediator) => this.mediator = mediator;
 
         public Task SendCommand<TCommand, TId>(
             TCommand command

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BuildingBlocks.Core.Commands;
 using BuildingBlocks.Core.Events;
@@ -7,17 +8,25 @@ namespace BuildingBlocks.Core.Bus
 {
     public interface IInMemoryBus
     {
-        Task SendCommand<TCommand>(
+        Task SendCommand<TCommand, TId>(
             TCommand command
-        ) where TCommand : Command;
+        ) where TId : struct where TCommand : Command<TId>;
 
-        Task SendCommand<TCommand>(
+        Task SendCommand<TCommand, TId>(
             IEnumerable<TCommand> command
-        ) where TCommand : Command;
+        ) where TId : struct where TCommand : Command<TId>;
 
-        Task<TResponse> SendCommand<TCommand, TResponse>(
+        Task<TResponse> SendCommand<TCommand, TId, TResponse>(
             TCommand command
-        ) where TCommand : Command where TResponse : class;
+        ) where TId : struct where TCommand : Command<TId>;
+
+        Task<TResponse> SendCommandGuidId<TCommand, TResponse>(
+            TCommand command
+        ) where TCommand : Command<Guid>;
+
+        Task<TResponse> SendCommandInt64Id<TCommand, TResponse>(
+            TCommand command
+        ) where TCommand : Command<long>;
 
         Task RaiseEvent<TEvent>(
             TEvent @event

@@ -15,21 +15,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BuildingBlocks.Core.Commands
 {
-    public abstract class CrudCommandHandler<TEntity, TDto, TCreateCommand, TUpdateCommand, TDeleteCommand, TGetResultCommand, TGetPageResultCommand> :
-        WriteOnlyCommandHandler<TEntity, TDto, TCreateCommand, TUpdateCommand, TDeleteCommand>
+    public abstract class CrudCommandHandler<TEntity, TDto, TId, TCreateCommand, TUpdateCommand, TDeleteCommand, TGetResultCommand, TGetPageResultCommand> :
+        WriteOnlyCommandHandler<TEntity, TDto, TId, TCreateCommand, TUpdateCommand, TDeleteCommand>
         where TDto: class
-        where TEntity : Entity<TEntity, long>
-        where TCreateCommand: CreateCommand
-        where TUpdateCommand: UpdateCommand
-        where TDeleteCommand: DeleteCommand
-        where TGetResultCommand: GetResultCommand<TDto>
-        where TGetPageResultCommand: GetPageResultCommand<TDto>
+        where TId: struct
+        where TEntity : Entity<TEntity, TId>
+        where TCreateCommand: CreateCommand<TId>
+        where TUpdateCommand: UpdateCommand<TId>
+        where TDeleteCommand: DeleteCommand<TId>
+        where TGetResultCommand: GetResultCommand<TDto, TId>
+        where TGetPageResultCommand: GetPageResultCommand<TDto, TId>
     {
         protected CrudCommandHandler(
             IMapper mapper,
             IUnitOfWork unitOfWork, 
             IInMemoryBus inMemoryBus,
-            IEFCoreRepository<TEntity, long> repository,
+            IEFCoreRepository<TEntity, TId> repository,
             INotificationHandler<DomainNotification> notifications
         ) : base(mapper, unitOfWork, inMemoryBus,repository, notifications)
         {
@@ -63,14 +64,14 @@ namespace BuildingBlocks.Core.Commands
         }
         
         protected virtual IQueryable<TEntity> QuerySort(
-            IQueryable<TEntity> query, GetPageResultCommand<TDto> request
+            IQueryable<TEntity> query, GetPageResultCommand<TDto, TId> request
         )
         {
             return query;
         }
         
         protected virtual IQueryable<TEntity> QueryFilter(
-            IQueryable<TEntity> query, GetPageResultCommand<TDto> request
+            IQueryable<TEntity> query, GetPageResultCommand<TDto, TId> request
         )
         {
             return query;

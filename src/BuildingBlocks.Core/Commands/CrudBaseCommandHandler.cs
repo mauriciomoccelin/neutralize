@@ -29,8 +29,8 @@ namespace BuildingBlocks.Core.Commands
         }
     }
     
-    public abstract class CreateCommand : Command { }
-    public abstract class UpdateCommand : Command { }
-    public abstract class DeleteCommand : Command { }
-    public abstract class GetResultCommand<TItem> : Command, IRequest<TItem> where TItem: class { }
+    public abstract class CreateCommand<TId> : Command<TId> where TId: struct{ }
+    public abstract class UpdateCommand<TId> : Command<TId> where TId : struct { }
+    public abstract class DeleteCommand<TId> : Command<TId> where TId : struct { }
+    public abstract class GetResultCommand<TItem, TId> : Command<TId>, IRequest<TItem> where TItem: class where TId : struct { }
 }

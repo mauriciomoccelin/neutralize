@@ -13,6 +13,7 @@ namespace BuildingBlocks.Core.Tests.Commands.Crud
         CrudCommandHandler<
             Person,
             PersonDto,
+            long,
             CreatePersonCommand,
             UpdatePersonCommand,
             DeletePersonCommand,

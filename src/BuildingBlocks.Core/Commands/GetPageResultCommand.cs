@@ -3,7 +3,7 @@ using MediatR;
 
 namespace BuildingBlocks.Core.Commands
 {
-    public abstract class GetPageResultCommand<TDto> : Command, IRequest<PagedResultDto<TDto>> where TDto : class
+    public abstract class GetPageResultCommand<TDto, TId> : Command<TId>, IRequest<PagedResultDto<TDto>> where TId: struct where TDto : class
     {
         public int Page { get; set; }
         public int PageSize { get; set; }

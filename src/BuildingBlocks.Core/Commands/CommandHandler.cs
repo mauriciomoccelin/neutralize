@@ -24,9 +24,9 @@ namespace BuildingBlocks.Core.Commands
             Notifications = notifications as DomainNotificationHandler;
         }
 
-        protected async Task CheckErrors(
-            Command command
-        )
+        protected async Task CheckErrors<TId>(
+            Command<TId> command
+        ) where TId: struct
         {
             command.Validate();
             foreach (var error in command.ValidationResult.Errors)

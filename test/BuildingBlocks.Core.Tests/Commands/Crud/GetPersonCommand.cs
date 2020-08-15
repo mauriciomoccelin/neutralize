@@ -2,7 +2,7 @@ using BuildingBlocks.Core.Commands;
 
 namespace BuildingBlocks.Core.Tests.Commands.Crud
 {
-    public class GetPersonCommand : GetResultCommand<PersonDto>
+    public class GetPersonCommand : GetResultCommand<PersonDto, long>
     {
         public GetPersonCommand(long id)
         {
