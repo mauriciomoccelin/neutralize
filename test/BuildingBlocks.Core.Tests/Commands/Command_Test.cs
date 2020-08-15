@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BuildingBlocks.Core.Bus;
-using BuildingBlocks.Core.Commands;
 using FluentAssertions;
 using Xunit;
 

@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Tests.Commands.Crud;
 using BuildingBlocks.Core.UoW;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,8 +6,6 @@ namespace BuildingBlocks.Core.Tests
 {
     public class BuildingBlocksCoreDbContext : DbContext, IUnitOfWork
     {
-        private DbSet<Person> Persons { get; set; }
-
         public BuildingBlocksCoreDbContext(
             DbContextOptions<BuildingBlocksCoreDbContext> options
         ) : base(options)
