@@ -35,12 +35,6 @@ namespace BuildingBlocks.Core.Tests.Commands.Crud
         {
         }
 
-        protected override Person MapToEntity(UpdatePersonCommand request, Person entity)
-        {
-            entity.ChangeName(request.Name);
-            return entity;
-        }
-
         public override void Dispose()
         {
             Repository.Dispose();

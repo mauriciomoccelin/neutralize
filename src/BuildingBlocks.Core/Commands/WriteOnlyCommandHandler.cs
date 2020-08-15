@@ -75,7 +75,7 @@ namespace BuildingBlocks.Core.Commands
         
         protected virtual TEntity MapToEntity(TUpdateCommand request, TEntity entity)
         {
-            return Mapper.Map<TEntity>(request);
+            return Mapper.Map(request, entity);
         }
     }
 }
