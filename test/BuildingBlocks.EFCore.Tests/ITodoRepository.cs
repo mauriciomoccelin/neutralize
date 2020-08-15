@@ -2,7 +2,7 @@ using BuildingBlocks.Core.Repositories;
 
 namespace BuildingBlocks.EFCore.Tests
 {
-    public interface ITodoRepository : IEFCoreRepository<ToDo, int>
+    public interface ITodoRepository : IRepository<ToDo, int>
     {
     }
 }

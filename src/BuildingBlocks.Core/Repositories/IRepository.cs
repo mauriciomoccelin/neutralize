@@ -7,7 +7,7 @@ using BuildingBlocks.Core.Models;
 
 namespace BuildingBlocks.Core.Repositories
 {
-    public interface IEFCoreRepository<TEntity, in TId> : IDisposable
+    public interface IRepository<TEntity, in TId> : IDisposable
         where TEntity : Entity<TEntity, TId>
         where TId : struct
     {
