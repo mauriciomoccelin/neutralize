@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BuildingBlocks.Core.Application;
 using BuildingBlocks.Core.Bus;
+using BuildingBlocks.Core.Extensions;
 using BuildingBlocks.Core.Models;
 using BuildingBlocks.Core.Notifications;
 using BuildingBlocks.Core.Repositories;
@@ -79,7 +80,7 @@ namespace BuildingBlocks.Core.Commands
             IQueryable<TEntity> query, TGetPageResultCommand request
         )
         {
-            return query.Skip(request.Page).Take(request.PageSize);
+            return query.PageBy(request.Page, request.PageSize);
         }
         
         protected virtual TDto MapToDto(Command request)
