@@ -1,37 +1,60 @@
-﻿namespace BuildingBlocks.Core.Models
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace BuildingBlocks.Core.Models
 {
-    public abstract class ValueObject<T> where T : class
+    public abstract class ValueObject
     {
-        protected ValueObject() { }
+        protected static bool EqualOperator(ValueObject left, ValueObject right)
+        {
+            if (ReferenceEquals(left, null) ^ ReferenceEquals(right, null))
+            {
+                return false;
+            }
+            return ReferenceEquals(left, null) || left.Equals(right);
+        }
+
+        protected static bool NotEqualOperator(ValueObject left, ValueObject right)
+        {
+            return !(EqualOperator(left, right));
+        }
+
+        protected abstract IEnumerable<object> GetAtomicValues();
 
         public override bool Equals(object obj)
         {
-            return obj is T valueObject && EqualsCore(valueObject);
-        }
+            if (obj == null || obj.GetType() != GetType())
+            {
+                return false;
+            }
 
-        protected abstract bool EqualsCore(T other);
+            var other = (ValueObject)obj;
+            using (var thisValues = GetAtomicValues().GetEnumerator())
+            {
+                var otherValues = other.GetAtomicValues().GetEnumerator();
+                while (thisValues.MoveNext() && otherValues.MoveNext())
+                {
+                    if (ReferenceEquals(thisValues.Current, null) ^
+                        ReferenceEquals(otherValues.Current, null))
+                    {
+                        return false;
+                    }
+
+                    if (thisValues.Current != null &&
+                        !thisValues.Current.Equals(otherValues.Current))
+                    {
+                        return false;
+                    }
+                }
+                return !thisValues.MoveNext() && !otherValues.MoveNext();
+            }
+        }
 
         public override int GetHashCode()
         {
-            return GetHashCodeCore();
-        }
-
-        protected abstract int GetHashCodeCore();
-
-        public static bool operator ==(ValueObject<T> a, ValueObject<T> b)
-        {
-            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
-                return true;
-
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
-                return false;
-
-            return a.Equals(b);
-        }
-
-        public static bool operator !=(ValueObject<T> a, ValueObject<T> b)
-        {
-            return !(a == b);
+            return GetAtomicValues()
+             .Select(x => x != null ? x.GetHashCode() : 0)
+             .Aggregate((x, y) => x ^ y);
         }
     }
 }
