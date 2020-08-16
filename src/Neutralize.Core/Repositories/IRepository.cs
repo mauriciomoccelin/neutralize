@@ -8,7 +8,7 @@ using Neutralize.Models;
 namespace Neutralize.Repositories
 {
     public interface IRepository<TEntity, in TId> : IDisposable
-        where TEntity : Entity<TEntity, TId>
+        where TEntity : Entity
         where TId : struct
     {
         Task<bool> Commit();

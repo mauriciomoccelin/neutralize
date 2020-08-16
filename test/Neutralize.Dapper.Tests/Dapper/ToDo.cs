@@ -2,14 +2,14 @@ using Neutralize.Models;
 
 namespace Neutralize.Tests.Dapper
 {
-    public class ToDo : Entity<ToDo, int>
+    public class ToDo : Entity
     {
         public bool Done { get; private set; }
         public string Description { get; private set; }
 
         protected ToDo() { }
         
-        public ToDo(int id, bool done, string description)
+        public ToDo(long id, bool done, string description)
         {
             Id = id;
             Done = done;

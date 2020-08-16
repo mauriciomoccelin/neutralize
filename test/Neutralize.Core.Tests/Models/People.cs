@@ -2,7 +2,7 @@ using Neutralize.Models;
 
 namespace Neutralize.Tests.Models
 {
-    public class People : Entity<People, long>
+    public class People : Entity
     {
         public string Name { get; private set; }
         public AddressVO Address { get; private set; }
@@ -13,6 +13,7 @@ namespace Neutralize.Tests.Models
             AddressVO address
         ) : base(id)
         {
+            Id = id;
             Name = name;
             Address = address;
         }

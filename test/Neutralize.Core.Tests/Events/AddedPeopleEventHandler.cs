@@ -21,9 +21,9 @@ namespace Neutralize.Tests.Events
             CancellationToken cancellationToken
         )
         {
-            var people = data.People ?? People.Empty();
+            var people = data.People;
 
-            if (people.IsEmpty())
+            if (people is null)
             {
                 await AddNotificationError("AddedPeopleEvent", "People is empty.");
                 return;

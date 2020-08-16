@@ -11,7 +11,7 @@ namespace Neutralize.EFCore
 {
     public abstract class EfCoreRepository<TDbContext, TEntity, TId> :
         IRepository<TEntity, TId> where TDbContext : DbContext
-        where TEntity : Entity<TEntity, TId>
+        where TEntity : Entity
         where TId : struct
     {
         protected TDbContext Context { get; }

@@ -14,7 +14,7 @@ using DapperExtensions;
 namespace Neutralize.Dapper
 {
     public abstract class DapperRepository<TEntity, TId> : IDapperRepository<TEntity, TId>
-        where TEntity : Entity<TEntity, TId>
+        where TEntity : Entity
         where TId : struct
     {
         public DbConnection Connection { get; }

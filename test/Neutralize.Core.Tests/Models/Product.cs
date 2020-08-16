@@ -2,7 +2,7 @@ using Neutralize.Models;
 
 namespace Neutralize.Tests.Models
 {
-    public class Product : Entity<People, long>
+    public class Product : Entity
     {
         public string Name { get; private set; }
 

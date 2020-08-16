@@ -9,7 +9,7 @@ using DapperExtensions;
 namespace Neutralize.Dapper.Extensions.Filters
 {
     internal class DapperExpressionVisitor<TEntity, TId> : ExpressionVisitor
-        where TEntity : Entity<TEntity, TId> where TId: struct
+        where TEntity : Entity where TId: struct
     {
         private PredicateGroup _pg;
         private bool unarySpecified;

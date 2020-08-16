@@ -10,7 +10,7 @@ namespace Neutralize.Dapper.Extensions.Filters
     {
         public static IPredicate ToPredicateGroup<TEntity, TId>(
             [NotNull] this Expression<Func<TEntity, bool>> expression
-        ) where TEntity : Entity<TEntity, TId> where TId: struct
+        ) where TEntity : Entity where TId: struct
         {
             if (expression is null)
             {
