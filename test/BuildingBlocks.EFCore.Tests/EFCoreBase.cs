@@ -17,7 +17,7 @@ namespace BuildingBlocks.EFCore.Tests
             services.AddScoped<EfCoreDbContext>();
             
             // Register repositories 
-            services.AddScoped<ITodoRepository, TodoRepository>();
+            services.AddScoped<ITodoRepository, TodoEfCoreRepository>();
             
             // build service provider
             provider = services.BuildServiceProvider();
