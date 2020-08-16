@@ -1,18 +1,18 @@
 [
     {
         "path": "src/Neutralize.Core/Neutralize.Core.csproj",
-        "version": "3.2.2"
+        "version": "4.2.1"
     },
     {
         "path": "src/Neutralize.Dapper/Neutralize.Dapper.csproj",
-        "version": "3.2.2"
+        "version": "4.2.1"
     },
     {
         "path": "src/Neutralize.EFCore/Neutralize.EFCore.csproj",
-        "version": "3.2.2"
+        "version": "4.2.1"
     },
     {
         "path": "src/Neutralize.Http/Neutralize.Http.csproj",
-        "version": "3.2.2"
+        "version": "4.2.1"
     }
 ]
