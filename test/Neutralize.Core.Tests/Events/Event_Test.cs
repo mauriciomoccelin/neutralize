@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Neutralize.Tests.Events
 {
-    public class Event_Test : NeutralizeCoreNeutralizeBaseTest
+    public class Event_Test : NeutralizeCoreBaseTest
     {
         private readonly IInMemoryBus _inMemoryBus;
 

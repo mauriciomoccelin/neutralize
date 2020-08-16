@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Neutralize.Tests.Commands
 {
-    public class Command_Test : NeutralizeCoreNeutralizeBaseTest
+    public class Command_Test : NeutralizeCoreBaseTest
     {
         private readonly IInMemoryBus inMemoryBus;
 
@@ -41,7 +41,7 @@ namespace Neutralize.Tests.Commands
 
             responseCommandOne.Should().NotBeNull();
             responseCommandTwo.Should().NotBeNull();
-            responseInvalidCommand.Should().BeNull();
+            responseInvalidCommand.Should().BeEmpty();
         }
 
         public override void Dispose()

@@ -5,27 +5,29 @@ using Neutralize.UoW;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Neutralize.Repositories;
 
 namespace Neutralize.Tests
 {
-    public abstract class NeutralizeCoreNeutralizeBaseTest : NeutralizeBaseTest
+    public abstract class NeutralizeCoreBaseTest : NeutralizeBaseTest
     {
-        protected NeutralizeCoreNeutralizeBaseTest()
+        protected NeutralizeCoreBaseTest()
         {
-            services.AddMediatR(typeof(NeutralizeCoreNeutralizeBaseTest).Assembly);
-            services.AddAutoMapper(typeof(NeutralizeCoreNeutralizeBaseTest).Assembly);
+            services.AddMediatR(typeof(NeutralizeCoreBaseTest).Assembly);
+            services.AddAutoMapper(typeof(NeutralizeCoreBaseTest).Assembly);
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IInMemoryBus, InMemoryInMemoryBus>();
+            services.AddScoped<IInMemoryBus, InMemoryBus>();
+            services.AddScoped<IUnitOfWork, NeutralizeCoreDbContext>();
             services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
             // Setup In Memory Database
             services.AddDbContext<NeutralizeCoreDbContext>(
                 option => option.UseInMemoryDatabase("Test")
             );
-
+            
             // Register DB Context Provider
             services.AddScoped<NeutralizeCoreDbContext>();
+            services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 
             // build service provider
             provider = services.BuildServiceProvider();

@@ -1,17 +1,19 @@
+using System;
 using Neutralize.Models;
 
 namespace Neutralize.Tests.Models
 {
-    public class People : Entity
+    public class People : AggregateRoot
     {
         public string Name { get; private set; }
         public AddressVO Address { get; private set; }
 
+        protected People() { }
         public People(
             long id,
             string name,
             AddressVO address
-        ) : base(id)
+        ) : base(Guid.NewGuid())
         {
             Id = id;
             Name = name;
@@ -28,7 +30,6 @@ namespace Neutralize.Tests.Models
                 AddressVO address
             )
             {
-
                 return new People(id, name, address);
             }
         }

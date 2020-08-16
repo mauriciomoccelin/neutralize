@@ -6,6 +6,7 @@ namespace Neutralize.Tests.Models
     {
         public string Name { get; private set; }
 
+        protected Product() { }
         public Product(
             long id,
             string name

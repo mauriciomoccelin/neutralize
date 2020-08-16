@@ -7,6 +7,7 @@ namespace Neutralize.Tests.Models
     {
         public string ZipCode { get; }
 
+        protected AddressVO() { }
         internal AddressVO(string zipCode) { ZipCode = zipCode; }
 
         protected override IEnumerable<object> GetAtomicValues()
