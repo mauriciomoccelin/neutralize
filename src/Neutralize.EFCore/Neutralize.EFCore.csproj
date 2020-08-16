@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <Version>1.1.0</Version>
+        <IsPackable>true</IsPackable>
+        <Description>.NET Neutralize EFCore</Description>
+        <Authors>Mauricio Moccelin</Authors>
+        <Company>Ittech</Company>
+        <PackageTags>Neutralize.EFCore</PackageTags>
+        <RepositoryType>GIT</RepositoryType>
+        <RootNamespace>Neutralize</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Neutralize.Core\Neutralize.Core.csproj" />
+    </ItemGroup>
+
+</Project>
+

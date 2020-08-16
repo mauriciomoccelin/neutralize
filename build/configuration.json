@@ -1,18 +1,18 @@
 [
     {
-        "path": "src/BuildingBlocks.Core/BuildingBlocks.Core.csproj",
+        "path": "src/Neutralize.Core/Neutralize.Core.csproj",
         "version": "3.2.2"
     },
     {
-        "path": "src/BuildingBlocks.Dapper/BuildingBlocks.Dapper.csproj",
+        "path": "src/Neutralize.Dapper/Neutralize.Dapper.csproj",
         "version": "3.2.2"
     },
     {
-        "path": "src/BuildingBlocks.EFCore/BuildingBlocks.EFCore.csproj",
+        "path": "src/Neutralize.EFCore/Neutralize.EFCore.csproj",
         "version": "3.2.2"
     },
     {
-        "path": "src/BuildingBlocks.Http/BuildingBlocks.Http.csproj",
+        "path": "src/Neutralize.Http/Neutralize.Http.csproj",
         "version": "3.2.2"
     }
 ]
