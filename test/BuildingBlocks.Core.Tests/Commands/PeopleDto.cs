@@ -1,6 +1,6 @@
-using BuildingBlocks.Core.Application;
+using BuildingBlocks.Application;
 
-namespace BuildingBlocks.Core.Tests.Commands.OnDemand
+namespace BuildingBlocks.Tests.Commands
 {
     public class PeopleDto : EntityDto<long>
     {

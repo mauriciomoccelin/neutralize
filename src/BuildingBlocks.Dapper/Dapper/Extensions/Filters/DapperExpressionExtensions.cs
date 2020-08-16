@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
-using BuildingBlocks.Core.Models;
+using BuildingBlocks.Models;
 using DapperExtensions;
 
 namespace BuildingBlocks.Dapper.Extensions.Filters

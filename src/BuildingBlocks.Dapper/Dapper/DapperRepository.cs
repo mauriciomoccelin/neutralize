@@ -4,10 +4,10 @@ using System.Data.Common;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Models;
-using BuildingBlocks.Core.Repositories;
 using BuildingBlocks.Dapper.Extensions.Filters;
 using BuildingBlocks.Dapper.Extensions.Sort;
+using BuildingBlocks.Models;
+using BuildingBlocks.Repositories;
 using Dapper;
 using DapperExtensions;
 

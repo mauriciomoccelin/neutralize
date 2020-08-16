@@ -1,23 +1,22 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Reflection;
-using BuildingBlocks.Test;
 using Dapper;
 using DapperExtensions.Sql;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BuildingBlocks.Dapper.Tests
+namespace BuildingBlocks.Tests.Dapper
 {
-    public abstract class DapperBaseTest : TestBase
+    public abstract class DapperBuildingBlocksBaseTest : BuildingBlocksBaseTest
     {
-        protected DapperBaseTest()
+        protected DapperBuildingBlocksBaseTest()
         {
             // Setup Dapper Database
 
             DapperExtensions.DapperExtensions.Configure(
-                typeof(DapperBaseTest), 
-                new List<Assembly>() {typeof(DapperBaseTest).Assembly }, 
+                typeof(DapperBuildingBlocksBaseTest), 
+                new List<Assembly>() {typeof(DapperBuildingBlocksBaseTest).Assembly }, 
                 new SqliteDialect()
             );
 

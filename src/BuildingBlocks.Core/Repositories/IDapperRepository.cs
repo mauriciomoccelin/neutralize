@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Models;
+using BuildingBlocks.Models;
 
-namespace BuildingBlocks.Core.Repositories
+namespace BuildingBlocks.Repositories
 {
     public interface IDapperRepository<TEntity, in TId> : IDisposable
         where TEntity : Entity<TEntity, TId>

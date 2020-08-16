@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Commands;
-using BuildingBlocks.Core.Events;
+using BuildingBlocks.Commands;
+using BuildingBlocks.Events;
 using MediatR;
 
-namespace BuildingBlocks.Core.Bus
+namespace BuildingBlocks.Bus
 {
     public sealed class InMemoryBus : IInMemoryBus
     {

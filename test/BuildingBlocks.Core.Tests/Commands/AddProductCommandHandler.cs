@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Bus;
-using BuildingBlocks.Core.Commands;
-using BuildingBlocks.Core.Notifications;
-using BuildingBlocks.Core.UoW;
+using BuildingBlocks.Bus;
+using BuildingBlocks.Commands;
+using BuildingBlocks.Notifications;
+using BuildingBlocks.UoW;
 using MediatR;
 
-namespace BuildingBlocks.Core.Tests.Commands.OnDemand
+namespace BuildingBlocks.Tests.Commands
 {
     public class AddProductCommandHandler : CommandHandler, IRequestHandler<AddProductCommand, string>
     {

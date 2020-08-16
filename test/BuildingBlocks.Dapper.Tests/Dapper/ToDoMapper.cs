@@ -1,6 +1,6 @@
 using DapperExtensions.Mapper;
 
-namespace BuildingBlocks.Dapper.Tests
+namespace BuildingBlocks.Tests.Dapper
 {
     /// <summary>
     /// Class form Dapper Extensions mapper queries 

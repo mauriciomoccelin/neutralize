@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Models;
-using BuildingBlocks.Core.Repositories;
+using BuildingBlocks.Models;
+using BuildingBlocks.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace BuildingBlocks.EFCore

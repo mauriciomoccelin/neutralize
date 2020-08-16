@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using BuildingBlocks.Http;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Xunit;
 
-namespace BuildingBlocks.Http.Tests
+namespace BuildingBlocks.Tests.Http
 {
     public class DefaultHttpClient_Test
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace BuildingBlocks.Core.UoW
+namespace BuildingBlocks.UoW
 {
     public interface IUnitOfWork : IDisposable
     {

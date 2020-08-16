@@ -1,7 +1,7 @@
-using BuildingBlocks.Core.Events;
-using BuildingBlocks.Core.Tests.Models;
+using BuildingBlocks.Events;
+using BuildingBlocks.Tests.Models;
 
-namespace BuildingBlocks.Core.Tests.Events
+namespace BuildingBlocks.Tests.Events
 {
     public class AddedPeopleEvent : Event
     {

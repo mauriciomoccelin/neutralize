@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace BuildingBlocks.Mock.WebApi
+namespace BuildingBlocks.Tests
 {
     public class Program
     {

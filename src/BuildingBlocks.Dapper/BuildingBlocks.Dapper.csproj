@@ -9,6 +9,7 @@
         <Company>Ittech</Company>
         <PackageTags>BuildingBlocks.Dapper</PackageTags>
         <RepositoryType>GIT</RepositoryType>
+        <RootNamespace>BuildingBlocks</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

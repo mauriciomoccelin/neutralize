@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Xunit;
 
-namespace BuildingBlocks.Core.Tests.Models
+namespace BuildingBlocks.Tests.Models
 {
     public class Entity_Test
     {

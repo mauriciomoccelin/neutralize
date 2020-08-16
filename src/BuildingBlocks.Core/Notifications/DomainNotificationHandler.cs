@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 
-namespace BuildingBlocks.Core.Notifications
+namespace BuildingBlocks.Notifications
 {
     public sealed class DomainNotificationHandler : INotificationHandler<DomainNotification>
     {

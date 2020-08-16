@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace BuildingBlocks.Core.Tests.Commands.OnDemand
+namespace BuildingBlocks.Tests.Commands
 {
     public class AddProductValidator : AbstractValidator<AddProductCommand>
     {

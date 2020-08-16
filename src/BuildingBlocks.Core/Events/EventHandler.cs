@@ -1,11 +1,11 @@
 using System.Threading;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Bus;
-using BuildingBlocks.Core.Notifications;
-using BuildingBlocks.Core.UoW;
+using BuildingBlocks.Bus;
+using BuildingBlocks.Notifications;
+using BuildingBlocks.UoW;
 using MediatR;
 
-namespace BuildingBlocks.Core.Events
+namespace BuildingBlocks.Events
 {
     public abstract class EventHandler<TEvent> : INotificationHandler<TEvent> where TEvent : Event
     {

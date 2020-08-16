@@ -1,6 +1,6 @@
 using System;
 
-namespace BuildingBlocks.Http.Tests
+namespace BuildingBlocks.Tests.Http
 {
     public class WeatherForecast
     {

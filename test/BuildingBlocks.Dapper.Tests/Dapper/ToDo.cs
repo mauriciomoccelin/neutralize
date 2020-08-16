@@ -1,6 +1,6 @@
-using BuildingBlocks.Core.Models;
+using BuildingBlocks.Models;
 
-namespace BuildingBlocks.Dapper.Tests
+namespace BuildingBlocks.Tests.Dapper
 {
     public class ToDo : Entity<ToDo, int>
     {

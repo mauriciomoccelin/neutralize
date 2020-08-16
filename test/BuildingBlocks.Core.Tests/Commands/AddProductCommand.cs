@@ -1,8 +1,7 @@
-﻿using BuildingBlocks.Core.Commands;
+﻿using BuildingBlocks.Commands;
 using MediatR;
-using Optional;
 
-namespace BuildingBlocks.Core.Tests.Commands.OnDemand
+namespace BuildingBlocks.Tests.Commands
 {
     public class AddProductCommand : Command, IRequest<string>
     {

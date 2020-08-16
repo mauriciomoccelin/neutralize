@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Bus;
-using BuildingBlocks.Core.Commands;
-using BuildingBlocks.Core.Events;
+using BuildingBlocks.Bus;
+using BuildingBlocks.Commands;
+using BuildingBlocks.Events;
 using MediatR;
 
-namespace BuildingBlocks.Core.Tests
+namespace BuildingBlocks.Tests
 {
     public sealed class InMemoryInMemoryBus : IInMemoryBus
     {

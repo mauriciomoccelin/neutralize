@@ -1,12 +1,12 @@
-using BuildingBlocks.Test;
+using BuildingBlocks.Tests;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BuildingBlocks.EFCore.Tests
+namespace BuildingBlocks.EFCore.Tests.Dapper
 {
-    public abstract class EFCoreBase : TestBase
+    public abstract class EfCore : BuildingBlocksBaseTest
     {
-        protected EFCoreBase()
+        protected EfCore()
         {
             // Setup In Memory Database
             services.AddDbContext<EfCoreDbContext>(

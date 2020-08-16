@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace BuildingBlocks.Core.Application
+namespace BuildingBlocks.Application
 {
     public class PagedResultDto<TDto> where TDto : class
     {

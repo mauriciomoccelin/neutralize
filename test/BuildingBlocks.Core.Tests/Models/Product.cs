@@ -1,6 +1,6 @@
-using BuildingBlocks.Core.Models;
+using BuildingBlocks.Models;
 
-namespace BuildingBlocks.Core.Tests.Models
+namespace BuildingBlocks.Tests.Models
 {
     public class Product : Entity<People, long>
     {

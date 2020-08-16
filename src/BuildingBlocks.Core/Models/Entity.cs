@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BuildingBlocks.Core.Models
+namespace BuildingBlocks.Models
 {
     public abstract class Entity<TEntity, TId>
         where TEntity : class

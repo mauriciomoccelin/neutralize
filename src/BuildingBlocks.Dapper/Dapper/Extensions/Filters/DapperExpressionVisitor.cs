@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using BuildingBlocks.Core.Models;
+using BuildingBlocks.Models;
 using DapperExtensions;
 
 namespace BuildingBlocks.Dapper.Extensions.Filters

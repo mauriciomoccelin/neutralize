@@ -1,20 +1,19 @@
-﻿using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using AutoMapper;
-using BuildingBlocks.Core.Bus;
-using BuildingBlocks.Core.Notifications;
-using BuildingBlocks.Core.UoW;
-using BuildingBlocks.Test;
+﻿using AutoMapper;
+using BuildingBlocks.Bus;
+using BuildingBlocks.Notifications;
+using BuildingBlocks.UoW;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace BuildingBlocks.Core.Tests
+namespace BuildingBlocks.Tests
 {
-    public abstract class BuildingBlocksCoreBaseTest : TestBase
+    public abstract class BuildingBlocksCoreBuildingBlocksBaseTest : BuildingBlocksBaseTest
     {
-        protected BuildingBlocksCoreBaseTest()
+        protected BuildingBlocksCoreBuildingBlocksBaseTest()
         {
-            services.AddMediatR(typeof(BuildingBlocksCoreBaseTest).Assembly);
-            services.AddAutoMapper(typeof(BuildingBlocksCoreBaseTest).Assembly);
+            services.AddMediatR(typeof(BuildingBlocksCoreBuildingBlocksBaseTest).Assembly);
+            services.AddAutoMapper(typeof(BuildingBlocksCoreBuildingBlocksBaseTest).Assembly);
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IInMemoryBus, InMemoryInMemoryBus>();

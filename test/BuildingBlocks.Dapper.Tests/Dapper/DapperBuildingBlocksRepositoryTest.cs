@@ -1,13 +1,13 @@
 using FluentAssertions;
 using Xunit;
 
-namespace BuildingBlocks.Dapper.Tests
+namespace BuildingBlocks.Tests.Dapper
 {
-    public class DapperRepository_Test : DapperBaseTest
+    public class DapperBuildingBlocksRepositoryTest : DapperBuildingBlocksBaseTest
     {
         private readonly IToDoDapperRepository repository;
         
-        public DapperRepository_Test()
+        public DapperBuildingBlocksRepositoryTest()
         {
             repository = Resolve<IToDoDapperRepository>();
         }

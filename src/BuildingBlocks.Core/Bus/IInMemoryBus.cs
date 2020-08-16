@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Commands;
-using BuildingBlocks.Core.Events;
+using BuildingBlocks.Commands;
+using BuildingBlocks.Events;
 
-namespace BuildingBlocks.Core.Bus
+namespace BuildingBlocks.Bus
 {
     public interface IInMemoryBus
     {

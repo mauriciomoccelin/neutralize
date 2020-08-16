@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using BuildingBlocks.Core.UoW;
+using BuildingBlocks.UoW;
 
-namespace BuildingBlocks.Core.Tests
+namespace BuildingBlocks.Tests
 {
     public sealed class UnitOfWork : IUnitOfWork
     {

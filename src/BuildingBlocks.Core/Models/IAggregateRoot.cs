@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using BuildingBlocks.Core.Events;
+using BuildingBlocks.Events;
 
-namespace BuildingBlocks.Core.Models
+namespace BuildingBlocks.Models
 {
     public class AggregateRoot<TEntity, TId> : Entity<TEntity, TId> 
         where TEntity : Entity<TEntity, TId>

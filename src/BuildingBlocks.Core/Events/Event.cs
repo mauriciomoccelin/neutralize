@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace BuildingBlocks.Core.Events
+namespace BuildingBlocks.Events
 {
     public abstract class Event : Message, INotification
     {

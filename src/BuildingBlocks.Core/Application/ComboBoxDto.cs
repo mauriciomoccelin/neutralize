@@ -1,4 +1,4 @@
-namespace BuildingBlocks.Core.Application
+namespace BuildingBlocks.Application
 {
     public class ComboBoxDto<TValue> where TValue : struct
     {

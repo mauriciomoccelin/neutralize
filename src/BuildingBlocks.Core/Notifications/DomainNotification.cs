@@ -1,7 +1,7 @@
 ﻿using System;
-using BuildingBlocks.Core.Events;
+using BuildingBlocks.Events;
 
-namespace BuildingBlocks.Core.Notifications
+namespace BuildingBlocks.Notifications
 {
     public class DomainNotification : Event
     {

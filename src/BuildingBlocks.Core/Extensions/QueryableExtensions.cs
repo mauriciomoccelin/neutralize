@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Query;
 
-namespace BuildingBlocks.Core.Extensions
+namespace BuildingBlocks.Extensions
 {
     public static class QueryableExtensions
     {

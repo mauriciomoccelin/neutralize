@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Bus;
-using BuildingBlocks.Core.Notifications;
-using BuildingBlocks.Core.UoW;
+using BuildingBlocks.Bus;
+using BuildingBlocks.Notifications;
+using BuildingBlocks.UoW;
 using MediatR;
 
-namespace BuildingBlocks.Core.Commands
+namespace BuildingBlocks.Commands
 {
     public abstract class CommandHandler : IDisposable
     {

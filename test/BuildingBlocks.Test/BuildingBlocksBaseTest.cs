@@ -1,17 +1,17 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BuildingBlocks.Test
+namespace BuildingBlocks.Tests
 {
     /// <summary>
     /// Abstract class for testing
     /// </summary>
-    public abstract class TestBase : IDisposable
+    public abstract class BuildingBlocksBaseTest : IDisposable
     {
         protected IServiceProvider provider;
         protected readonly IServiceCollection services;
 
-        protected TestBase()
+        protected BuildingBlocksBaseTest()
         {
             services = new ServiceCollection();
         }

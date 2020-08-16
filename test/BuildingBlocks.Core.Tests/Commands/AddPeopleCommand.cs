@@ -1,6 +1,6 @@
-﻿using BuildingBlocks.Core.Commands;
+﻿using BuildingBlocks.Commands;
 
-namespace BuildingBlocks.Core.Tests.Commands.OnDemand
+namespace BuildingBlocks.Tests.Commands
 {
     public class AddPeopleCommand : Command
     {

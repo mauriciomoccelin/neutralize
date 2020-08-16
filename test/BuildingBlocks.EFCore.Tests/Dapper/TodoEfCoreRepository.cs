@@ -1,4 +1,4 @@
-namespace BuildingBlocks.EFCore.Tests
+namespace BuildingBlocks.EFCore.Tests.Dapper
 {
     public class TodoEfCoreRepository : EfCoreRepository<EfCoreDbContext, ToDo, int>, ITodoRepository
     {

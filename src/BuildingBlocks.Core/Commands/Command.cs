@@ -1,8 +1,8 @@
 ﻿using System;
-using BuildingBlocks.Core.Events;
+using BuildingBlocks.Events;
 using FluentValidation.Results;
 
-namespace BuildingBlocks.Core.Commands
+namespace BuildingBlocks.Commands
 {
     public abstract class Command : Command<Guid>
     {

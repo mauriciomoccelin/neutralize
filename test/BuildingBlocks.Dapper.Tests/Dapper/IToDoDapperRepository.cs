@@ -1,6 +1,6 @@
-using BuildingBlocks.Core.Repositories;
+using BuildingBlocks.Repositories;
 
-namespace BuildingBlocks.Dapper.Tests
+namespace BuildingBlocks.Tests.Dapper
 {
     public interface IToDoDapperRepository : IDapperRepository<ToDo, int>
     {

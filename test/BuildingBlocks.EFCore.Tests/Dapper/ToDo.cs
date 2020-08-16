@@ -1,6 +1,6 @@
-using BuildingBlocks.Core.Models;
+using BuildingBlocks.Models;
 
-namespace BuildingBlocks.EFCore.Tests
+namespace BuildingBlocks.EFCore.Tests.Dapper
 {
     public class ToDo : Entity<ToDo, int>
     {

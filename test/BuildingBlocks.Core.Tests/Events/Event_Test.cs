@@ -1,13 +1,13 @@
 using System;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Bus;
-using BuildingBlocks.Core.Tests.Models;
+using BuildingBlocks.Bus;
+using BuildingBlocks.Tests.Models;
 using FluentAssertions;
 using Xunit;
 
-namespace BuildingBlocks.Core.Tests.Events
+namespace BuildingBlocks.Tests.Events
 {
-    public class Event_Test : BuildingBlocksCoreBaseTest
+    public class Event_Test : BuildingBlocksCoreBuildingBlocksBaseTest
     {
         private readonly IInMemoryBus _inMemoryBus;
 

@@ -1,11 +1,11 @@
 using System.Threading;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Events;
-using BuildingBlocks.Core.Bus;
-using BuildingBlocks.Core.Tests.Models;
-using BuildingBlocks.Core.UoW;
+using BuildingBlocks.Bus;
+using BuildingBlocks.Events;
+using BuildingBlocks.Tests.Models;
+using BuildingBlocks.UoW;
 
-namespace BuildingBlocks.Core.Tests.Events
+namespace BuildingBlocks.Tests.Events
 {
     public class AddedPeopleEventHandler : EventHandler<AddedPeopleEvent>
     {

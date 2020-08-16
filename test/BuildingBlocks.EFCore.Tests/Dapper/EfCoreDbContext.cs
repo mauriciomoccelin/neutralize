@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using BuildingBlocks.Core.UoW;
+using BuildingBlocks.UoW;
 using Microsoft.EntityFrameworkCore;
 
-namespace BuildingBlocks.EFCore.Tests
+namespace BuildingBlocks.EFCore.Tests.Dapper
 {
     public class EfCoreDbContext : DbContext, IUnitOfWork
     {

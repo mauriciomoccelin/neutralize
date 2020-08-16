@@ -9,6 +9,7 @@
         <Company>Ittech</Company>
         <PackageTags>BuildingBlocks.Http</PackageTags>
         <RepositoryType>GIT</RepositoryType>
+        <RootNamespace>BuildingBlocks</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

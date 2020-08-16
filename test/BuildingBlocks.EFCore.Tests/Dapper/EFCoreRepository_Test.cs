@@ -1,9 +1,9 @@
 using FluentAssertions;
 using Xunit;
 
-namespace BuildingBlocks.EFCore.Tests
+namespace BuildingBlocks.EFCore.Tests.Dapper
 {
-    public class EfCoreRepositoryEfCore : EFCoreBase
+    public class EfCoreRepositoryEfCore : EfCore
     {
         private readonly ITodoRepository repository;
         

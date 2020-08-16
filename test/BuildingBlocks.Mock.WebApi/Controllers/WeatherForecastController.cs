@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace BuildingBlocks.Mock.WebApi.Controllers
+namespace BuildingBlocks.Tests.Controllers
 {
     [ApiController]
     [Route("[controller]")]

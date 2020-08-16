@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using BuildingBlocks.Core.UoW;
+using BuildingBlocks.UoW;
 using Microsoft.EntityFrameworkCore;
 
-namespace BuildingBlocks.Core.Tests
+namespace BuildingBlocks.Tests
 {
     public class BuildingBlocksCoreDbContext : DbContext, IUnitOfWork
     {

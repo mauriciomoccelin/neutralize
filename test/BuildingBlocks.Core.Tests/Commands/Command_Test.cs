@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BuildingBlocks.Core.Bus;
+using BuildingBlocks.Bus;
 using FluentAssertions;
 using Xunit;
 
-namespace BuildingBlocks.Core.Tests.Commands.OnDemand
+namespace BuildingBlocks.Tests.Commands
 {
-    public class Command_Test : BuildingBlocksCoreBaseTest
+    public class Command_Test : BuildingBlocksCoreBuildingBlocksBaseTest
     {
         private readonly IInMemoryBus inMemoryBus;
 

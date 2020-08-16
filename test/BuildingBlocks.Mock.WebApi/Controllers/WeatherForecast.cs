@@ -1,6 +1,6 @@
 using System;
 
-namespace BuildingBlocks.Mock.WebApi.Controllers
+namespace BuildingBlocks.Tests.Controllers
 {
     public class WeatherForecast
     {
