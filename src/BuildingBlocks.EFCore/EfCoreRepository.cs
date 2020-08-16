@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BuildingBlocks.EFCore
 {
-    public abstract class Repository<TDbContext, TEntity, TId> :
+    public abstract class EfCoreRepository<TDbContext, TEntity, TId> :
         IRepository<TEntity, TId> where TDbContext : DbContext
         where TEntity : Entity<TEntity, TId>
         where TId : struct
@@ -17,7 +17,7 @@ namespace BuildingBlocks.EFCore
         protected TDbContext Context { get; }
         protected DbSet<TEntity> DbSet { get; }
 
-        protected Repository(TDbContext context)
+        protected EfCoreRepository(TDbContext context)
         {
             Context = context;
             DbSet = Context.Set<TEntity>();
