@@ -10,28 +10,21 @@ using Neutralize.UoW;
 namespace Neutralize.Application.Services
 {
     public abstract class CrudAppServiceBase<TEntity, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput> 
-        : ICrudAppService<long, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput>
+        : ApplicationService, ICrudAppService<long, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput>
         where TEntity : Entity
         where TCreateDto : IEntityDto<long> 
         where TUpdateDto : IEntityDto<long> 
         where TDeleteDto : IEntityDto<long> 
-        where TGetDto : IEntityDto<long> 
-        where TListDto : IEntityDto<long> 
-        where TGetInput : IEntityDto<long> 
+        where TGetDto : IEntityDto<long>
+        where TListDto : IEntityDto<long>
+        where TGetInput : IEntityDto<long>
         where TListInput : PagedRequestDto
     {
-        protected IMapper Mapper { get; }
-        protected IUnitOfWork UnitOfWork { get; }
         protected IRepository<TEntity, long> Repository { get; }
 
-        protected CrudAppServiceBase(
-            IMapper mapper,
-            IUnitOfWork unitOfWork,
-            IRepository<TEntity, long> repository
-        )
+        protected CrudAppServiceBase(IMapper mapper, IUnitOfWork unitOfWork, IRepository<TEntity, long> repository) 
+            : base(mapper, unitOfWork)
         {
-            Mapper = mapper;
-            UnitOfWork = unitOfWork;
             Repository = repository;
         }
 
@@ -106,7 +99,7 @@ namespace Neutralize.Application.Services
             return new PagedResultDto<TListDto>(total, Mapper.Map<IEnumerable<TListDto>>(items));
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             UnitOfWork?.Dispose();
             Repository?.Dispose();

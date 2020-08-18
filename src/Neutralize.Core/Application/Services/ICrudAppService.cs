@@ -1,11 +1,10 @@
-using System;
 using System.Threading.Tasks;
 
 namespace Neutralize.Application.Services
 {
     public interface ICrudAppService
         <TId, in TCreateDto, in TUpdateDto, in TDeleteDto, TGetDto, TListDto, in TGetInput, in TListInput>
-        : IDisposable
+        : IApplicationService
         where TId : struct
         where TCreateDto: IEntityDto<TId> 
         where TUpdateDto : IEntityDto<TId> 
