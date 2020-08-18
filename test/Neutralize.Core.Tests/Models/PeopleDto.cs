@@ -1,6 +1,6 @@
 using Neutralize.Application;
 
-namespace Neutralize.Tests.Commands
+namespace Neutralize.Tests.Models
 {
     public class PeopleDto : EntityDto<long>
     {

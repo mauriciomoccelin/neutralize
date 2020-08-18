@@ -1,6 +1,6 @@
 namespace Neutralize.Application
 {
-    public class PagedRequestDto<TDto> where TDto : class
+    public class PagedRequestDto
     {
         public int Page { get; set; }
         public int PageSize { get; set; }

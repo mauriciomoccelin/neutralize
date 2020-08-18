@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Neutralize.Repositories;
+using Neutralize.Tests.Application.Services;
 
 namespace Neutralize.Tests
 {
@@ -29,6 +30,8 @@ namespace Neutralize.Tests
             services.AddScoped<NeutralizeCoreDbContext>();
             services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
 
+            services.AddScoped<IPeopleAppService, PeopleAppService>();
+            
             // build service provider
             provider = services.BuildServiceProvider();
         }

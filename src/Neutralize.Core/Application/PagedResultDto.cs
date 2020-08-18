@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Neutralize.Application
 {
-    public class PagedResultDto<TDto> where TDto : class
+    public class PagedResultDto<TDto>
     {
         public long TotalCount { get; }
         public IEnumerable<TDto> Items { get; }
