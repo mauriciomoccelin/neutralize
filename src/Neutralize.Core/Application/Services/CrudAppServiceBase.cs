@@ -9,12 +9,12 @@ using Neutralize.UoW;
 
 namespace Neutralize.Application.Services
 {
-    public abstract class CrudAppServiceBase<TEntity, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput> 
+    public abstract class CrudAppServiceBase<TEntity, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput>
         : ApplicationService, ICrudAppService<long, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput>
-        where TEntity : Entity
-        where TCreateDto : IEntityDto<long> 
-        where TUpdateDto : IEntityDto<long> 
-        where TDeleteDto : IEntityDto<long> 
+        where TEntity : IEntity
+        where TCreateDto : IEntityDto<long>
+        where TUpdateDto : IEntityDto<long>
+        where TDeleteDto : IEntityDto<long>
         where TGetDto : IEntityDto<long>
         where TListDto : IEntityDto<long>
         where TGetInput : IEntityDto<long>
@@ -22,7 +22,7 @@ namespace Neutralize.Application.Services
     {
         protected IRepository<TEntity, long> Repository { get; }
 
-        protected CrudAppServiceBase(IMapper mapper, IUnitOfWork unitOfWork, IRepository<TEntity, long> repository) 
+        protected CrudAppServiceBase(IMapper mapper, IUnitOfWork unitOfWork, IRepository<TEntity, long> repository)
             : base(mapper, unitOfWork)
         {
             Repository = repository;
@@ -42,13 +42,13 @@ namespace Neutralize.Application.Services
         {
             return Mapper.Map<TGetDto>(entity);
         }
-        
-        protected virtual TEntity MapToEntity<TDto>(TDto dto) where TDto: IEntityDto<long>
+
+        protected virtual TEntity MapToEntity<TDto>(TDto dto) where TDto : IEntityDto<long>
         {
             return Mapper.Map<TEntity>(dto);
         }
-        
-        protected virtual TEntity MapToEntity<TDto>(TDto dto, TEntity entity) where TDto: IEntityDto<long>
+
+        protected virtual TEntity MapToEntity<TDto>(TDto dto, TEntity entity) where TDto : IEntityDto<long>
         {
             return Mapper.Map(dto, entity);
         }
@@ -67,7 +67,7 @@ namespace Neutralize.Application.Services
         {
             var entity = await Repository.GetAsync(input.Id);
             entity = MapToEntity(input, entity);
-            
+
             await Repository.UpdateAsync(entity);
             await UnitOfWork.Commit();
 
@@ -77,7 +77,7 @@ namespace Neutralize.Application.Services
         public virtual async Task Delete(TDeleteDto input)
         {
             var entity = await Repository.GetAsync(input.Id);
-            
+
             await Repository.RemoveAsync(entity);
             await UnitOfWork.Commit();
         }

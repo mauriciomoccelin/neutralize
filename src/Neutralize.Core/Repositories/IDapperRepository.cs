@@ -8,7 +8,7 @@ using Neutralize.Models;
 namespace Neutralize.Repositories
 {
     public interface IDapperRepository<TEntity, in TId> : IDisposable
-        where TEntity : Entity
+        where TEntity : IEntity
         where TId : struct
     {
         DbConnection Connection { get; }
@@ -18,7 +18,7 @@ namespace Neutralize.Repositories
         Task<TEntity> GetAsync(TId id);
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<long> CountAsync(Expression<Func<TEntity, bool>> predicate);
-        Task<TEntity> FirstOrAsync(Expression<Func<TEntity, bool>> predicate, TEntity @default = null);
+        Task<TEntity> FirstOrAsync(Expression<Func<TEntity, bool>> predicate, TEntity @default = default(TEntity));
         Task<IEnumerable<TEntity>> GetAllPagedAsync(
             int page,
             int itemsPerPage,
