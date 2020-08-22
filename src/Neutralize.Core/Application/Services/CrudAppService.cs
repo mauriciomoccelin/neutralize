@@ -1,4 +1,5 @@
 using AutoMapper;
+using Neutralize.Bus;
 using Neutralize.Models;
 using Neutralize.Repositories;
 using Neutralize.UoW;
@@ -16,8 +17,12 @@ namespace Neutralize.Application.Services
         where TGetInput : IEntityDto<long>
         where TListInput : PagedRequestDto
     {
-        protected CrudAppService(IMapper mapper, IUnitOfWork unitOfWork, IRepository<TEntity, long> repository)
-            : base(mapper, unitOfWork, repository)
+        protected CrudAppService(
+            IMapper mapper,
+            IUnitOfWork unitOfWork,
+            IInMemoryBus inMemoryBus,
+            IRepository<TEntity, long> repository
+        ) : base(mapper, unitOfWork, inMemoryBus, repository)
         {
         }
     }
@@ -31,8 +36,12 @@ namespace Neutralize.Application.Services
         where TGetDto : IEntityDto<long>
         where TGetInput : IEntityDto<long>
     {
-        protected CrudAppService(IMapper mapper, IUnitOfWork unitOfWork, IRepository<TEntity, long> repository)
-            : base(mapper, unitOfWork, repository)
+        protected CrudAppService(
+            IMapper mapper,
+            IUnitOfWork unitOfWork,
+            IInMemoryBus inMemoryBus,
+            IRepository<TEntity, long> repository
+        ) : base(mapper, unitOfWork, inMemoryBus, repository)
         {
         }
     }
@@ -42,8 +51,12 @@ namespace Neutralize.Application.Services
         where TEntity : IEntity
         where TDto : IEntityDto<long>
     {
-        protected CrudAppService(IMapper mapper, IUnitOfWork unitOfWork, IRepository<TEntity, long> repository)
-            : base(mapper, unitOfWork, repository)
+        protected CrudAppService(
+            IMapper mapper,
+            IUnitOfWork unitOfWork,
+            IInMemoryBus inMemoryBus,
+            IRepository<TEntity, long> repository
+        ) : base(mapper, unitOfWork, inMemoryBus, repository)
         {
         }
     }

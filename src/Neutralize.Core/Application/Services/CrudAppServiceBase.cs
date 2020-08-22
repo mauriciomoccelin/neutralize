@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Neutralize.Bus;
 using Neutralize.Models;
 using Neutralize.Repositories;
 using Neutralize.UoW;
@@ -22,8 +23,12 @@ namespace Neutralize.Application.Services
     {
         protected IRepository<TEntity, long> Repository { get; }
 
-        protected CrudAppServiceBase(IMapper mapper, IUnitOfWork unitOfWork, IRepository<TEntity, long> repository)
-            : base(mapper, unitOfWork)
+        protected CrudAppServiceBase(
+            IMapper mapper,
+            IUnitOfWork unitOfWork,
+            IInMemoryBus inMemoryBus,
+            IRepository<TEntity, long> repository
+        ) : base(mapper, unitOfWork, inMemoryBus)
         {
             Repository = repository;
         }
