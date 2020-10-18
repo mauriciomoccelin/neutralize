@@ -34,7 +34,7 @@ namespace Neutralize.Kafka
             };
             ConsumerConfig = new ConsumerConfig
             { 
-                GroupId = "forecast",
+                GroupId = group,
                 BootstrapServers = bootstrapServers,
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
