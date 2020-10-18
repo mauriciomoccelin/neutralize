@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Neutralize.Kafka.Productors;
 
 namespace Neutralize.Tests.Controllers
 {
@@ -25,11 +26,13 @@ namespace Neutralize.Tests.Controllers
             "Scorching"
         };
 
+        private readonly IKafkaProducer _producer;
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IKafkaProducer producer)
         {
             _logger = logger;
+            _producer = producer;
         }
 
         [HttpGet]
@@ -62,6 +65,7 @@ namespace Neutralize.Tests.Controllers
         [Route("with-params")]
         public WeatherForecast Post([FromBody] WeatherForecast forecast)
         {
+            _producer?.ProduceAsync("forecast", forecast);
             return forecast;
         }
         
