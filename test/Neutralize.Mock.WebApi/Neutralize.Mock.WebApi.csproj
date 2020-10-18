@@ -5,5 +5,9 @@
         <RootNamespace>Neutralize.Tests</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Neutralize.Kafka\Neutralize.Kafka.csproj" />
+    </ItemGroup>
+
 </Project>
 

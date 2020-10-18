@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Neutralize.Tests
@@ -10,10 +12,14 @@ namespace Neutralize.Tests
     {
         protected IServiceProvider provider;
         protected readonly IServiceCollection services;
+        protected readonly IConfiguration configuration;
 
         protected NeutralizeBaseTest()
         {
             services = new ServiceCollection();
+            configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json").Build();
         }
         
         /// <summary>

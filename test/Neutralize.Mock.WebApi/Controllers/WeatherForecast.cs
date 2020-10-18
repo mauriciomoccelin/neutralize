@@ -1,8 +1,9 @@
 using System;
+using MediatR;
 
 namespace Neutralize.Tests.Controllers
 {
-    public class WeatherForecast
+    public class WeatherForecast : INotification
     {
         public DateTime Date { get; set; }
 

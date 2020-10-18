@@ -1,8 +1,11 @@
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Neutralize.Kafka;
+using Neutralize.Tests.Controllers;
 
 namespace Neutralize.Tests
 {
@@ -18,6 +21,7 @@ namespace Neutralize.Tests
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddKafka(Configuration, options => options.AddHandler("forecast", typeof(WeatherForecast)));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
