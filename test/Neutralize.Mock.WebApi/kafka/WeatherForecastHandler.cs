@@ -6,7 +6,7 @@ using Neutralize.Tests.Controllers;
 
 namespace Neutralize.Tests.kafka
 {
-    public class KafkaHandler_Test : INotificationHandler<WeatherForecast>
+    public class WeatherForecastHandler : INotificationHandler<WeatherForecast>
     {
         public Task Handle(WeatherForecast notification, CancellationToken cancellationToken)
         {

@@ -65,7 +65,7 @@ namespace Neutralize.Tests.Controllers
         [Route("with-params")]
         public WeatherForecast Post([FromBody] WeatherForecast forecast)
         {
-            _producer.ProduceAsync("forecast", forecast);
+            _producer?.ProduceAsync("forecast", forecast);
             return forecast;
         }
         

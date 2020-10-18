@@ -1,3 +1,4 @@
+using System.Reflection;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,7 +22,9 @@ namespace Neutralize.Tests
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddKafka(Configuration, options => options.AddHandler("forecast", typeof(WeatherForecast)));
+            services
+                .AddKafkaAssemblyHandlers(Assembly.Load("Neutralize.Mock.WebApi"))
+                .AddKafka(Configuration, options => options.AddHandler("forecast", typeof(WeatherForecast)));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -1,7 +1,7 @@
 using System;
 using MediatR;
 
-namespace Neutralize.Tests.Controllers
+namespace Neutralize.Tests
 {
     public class WeatherForecast : INotification
     {
@@ -9,7 +9,5 @@ namespace Neutralize.Tests.Controllers
         public string Summary { get; set; }
         public int TemperatureC { get; set; }
         public int TemperatureF => 32 + (int) (TemperatureC / 0.5556);
-
-        public override string ToString() => $"{Date} | {Summary} | C°: {TemperatureC} | F°: {TemperatureF}";
     }
 }

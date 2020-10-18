@@ -1,25 +1,28 @@
-using Microsoft.Extensions.DependencyInjection;
+using System;
 using Neutralize.Kafka.Productors;
-using Neutralize.Tests;
 using Xunit;
 
-namespace Neutralize.Kafka.Test
+namespace Neutralize.Tests
 {
-    public class Producer_Test : NeutralizeBaseTest
+    public class Producer_Test : BaseKafkaTest
     {
         private readonly IKafkaProducer producer;
         public Producer_Test()
         {
-            services.AddKafka(configuration);
-            provider = services.BuildServiceProvider();
-            
             producer = Resolve<IKafkaProducer>();
         }
         
         [Fact]
-        public void Test()
+        public async void Test()
         {
-            producer.ProduceAsync("test", "Hello Worls!");
+            var forecast = new WeatherForecast
+            {
+                Date = DateTime.Now,
+                Summary = "Scorching",
+                TemperatureC = 26
+            };
+            
+            await producer.ProduceAsync("forecast", forecast);
         }
 
         public override void Dispose()
