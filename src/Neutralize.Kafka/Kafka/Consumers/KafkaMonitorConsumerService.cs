@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace Neutralize.Kafka.Consumers
 {
-    public class KafkaMonitorConsumerService : BackgroundService
+    public class KafkaMonitorConsumerService : IHostedService
     {
         private readonly IMediator mediator;
         private readonly IKafkaConfiguration configuration;
@@ -22,15 +22,22 @@ namespace Neutralize.Kafka.Consumers
             this.mediator = mediator;
             this.configuration = configuration;
         }
-        
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+
+        public Task StartAsync(CancellationToken cancellationToken)
         {
             Console.WriteLine("Kafka consumer is starting.");
-
-            await Task.Factory.StartNew(Start, stoppingToken);
+            Task.Factory.StartNew(StartHandlerDelegate, cancellationToken);
+            
+            return Task.CompletedTask;
         }
 
-        private async Task Start()
+        public Task StopAsync(CancellationToken stoppingToken)
+        {
+            Console.WriteLine("Kafka consumer is stoping.");
+            return Task.CompletedTask;
+        }
+        
+        private async Task StartHandlerDelegate()
         {
             using (var consumer = new ConsumerBuilder<Ignore, string>(configuration.ConsumerConfig).Build())
             {
@@ -40,21 +47,30 @@ namespace Neutralize.Kafka.Consumers
                     e.Cancel = true;
                     cts.Cancel();
                 };
-                consumer.Subscribe(configuration.Handlers.Keys);
+                consumer.Subscribe(configuration.Handlers.Keys.ToArray());
 
                 try
                 {
-                    while (!cts.IsCancellationRequested)
+                    while (true)
                     {
                         try
                         {
                             var consumeResult = consumer.Consume(cts.Token);
                             var type = configuration.Handlers.First(k => k.Key.Equals(consumeResult.Topic));
                             var result = JsonConvert.DeserializeObject(consumeResult.Message.Value, type.Value);
-                            if (result is null)
-                                Console.WriteLine("The tópic {0} for offset {1} is null", consumeResult.Topic,
-                                    consumeResult.TopicPartitionOffset);
-                            else await mediator.Publish(result, cts.Token);
+                            if (result is INotification)
+                            {
+                                Console.WriteLine(
+                                    "Received message: tópic ({0}), offset ({1}), partition ({2})",
+                                    consumeResult.Topic, consumeResult.Offset, consumeResult.Partition.Value
+                                );
+                                await mediator.Publish(result, cts.Token);
+                            }
+                            else
+                                Console.WriteLine(
+                                    "The tópic {0} for offset {1} is null",
+                                    consumeResult.Topic, consumeResult.TopicPartitionOffset
+                                );
                         }
                         catch (ConsumeException exception)
                         {
@@ -70,13 +86,6 @@ namespace Neutralize.Kafka.Consumers
                     consumer.Close();
                 }
             }
-        }
-
-        public override async Task StopAsync(CancellationToken stoppingToken)
-        {
-            Console.WriteLine("Kafka consumer is stoping.");
-
-            await base.StopAsync(stoppingToken);
         }
     }
 }
