@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Reflection;
 using MediatR;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Neutralize.Kafka.Consumers;
@@ -29,12 +27,17 @@ namespace Neutralize.Kafka
             option.Invoke(kafkaConfiguration);
 
             services.AddSingleton<IKafkaConfiguration>(sp => kafkaConfiguration);
-
-            services.AddMediatR(Assembly.Load("Neutralize.Kafka"));
+            
             services.AddSingleton<IKafkaProducer, KafkaProducer>();
             services.AddSingleton<IReportDelivery, ReportDelivery>();
 
             services.AddHostedService<KafkaMonitorConsumerService>();
+            return services;
+        }
+
+        public static IServiceCollection AddKafkaAssemblyHandlers(this IServiceCollection services, params Assembly[] args)
+        {
+            services.AddMediatR(args);
             return services;
         }
     }
