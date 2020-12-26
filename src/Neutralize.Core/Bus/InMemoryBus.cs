@@ -2,62 +2,64 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Neutralize.Commands;
 using Neutralize.Events;
-using MediatR;
 
 namespace Neutralize.Bus
 {
     public sealed class InMemoryBus : IInMemoryBus
     {
-        private readonly IMediator mediator;
-
-        public InMemoryBus(IMediator mediator) => this.mediator = mediator;
+        public IMediator Mediator { get; }
+        
+        public InMemoryBus(IMediator mediator) => Mediator = mediator;
 
         public Task SendCommand<TCommand, TId>(
             TCommand command
         ) where TId : struct where TCommand : Command<TId>
         {
-            return mediator.Send(command);
+            return command == null ? Task.CompletedTask : Mediator.Send(command);
         }
 
         public Task SendCommand<TCommand, TId>(
             IEnumerable<TCommand> commands
         ) where TId : struct where TCommand : Command<TId>
         {
-            return Task.WhenAll(commands.Select(command => mediator.Send<Unit>(command)));
+            return commands == null || commands?.Any() == false
+                ? Task.CompletedTask
+                : Task.WhenAll(commands.Select(command => Mediator.Send(command)));
         }
 
         public Task<TResponse> SendCommand<TCommand, TId, TResponse>(
             TCommand command
         ) where TCommand : Command<TId> where TId : struct
         {
-            return mediator.Send(
+            return Mediator.Send(
                 command as IRequest<TResponse> ?? throw new ArgumentNullException(
                     nameof(command), "The command not be null"
                 )
             );
         }
 
-        public Task<TResponse> SendCommandGuidId<TCommand, TResponse>(
-            TCommand command
-        ) where TCommand : Command<Guid>
+        public Task<TResponse> SendCommandGuidId<TResponse>(
+            Command<Guid> command
+        )
         {
-            return SendCommand<TCommand, Guid, TResponse>(command);
+            return SendCommand<Command<Guid>, Guid, TResponse>(command);
         }
 
-        public Task<TResponse> SendCommandInt64Id<TCommand, TResponse>(
-            TCommand command
-        ) where TCommand : Command<long>
+        public Task<TResponse> SendCommandInt64Id<TResponse>(
+            Command<long> command
+        )
         {
-            return SendCommand<TCommand, long, TResponse>(command);
+            return SendCommand<Command<long>, long, TResponse>(command);
         }
 
         public Task RaiseEvent<TEvent>(
             TEvent @event
         ) where TEvent : Event
         {
-            return mediator.Publish(@event);
+            return @event == null ? Task.CompletedTask : Mediator.Publish(@event);
         }
     }
 }
