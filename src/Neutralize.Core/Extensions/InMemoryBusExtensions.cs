@@ -9,7 +9,7 @@ namespace Neutralize.Extensions
 {
     public static class InMemoryBusExtensions
     {
-        public static async Task PublishDomainEvents<T>(this IInMemoryBus mediator, T dbContext) where T : DbContext
+        public static async Task PublishDomainEvents<T>(this INeutralizeBus mediator, T dbContext) where T : DbContext
         {
             var domainEntities = dbContext.ChangeTracker
                 .Entries<AggregateRoot>()

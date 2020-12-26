@@ -20,9 +20,9 @@ namespace Neutralize.Application.Services
         protected CrudAppService(
             IMapper mapper,
             IUnitOfWork unitOfWork,
-            IInMemoryBus inMemoryBus,
+            INeutralizeBus neutralizeBus,
             IRepository<TEntity, long> repository
-        ) : base(mapper, unitOfWork, inMemoryBus, repository)
+        ) : base(mapper, unitOfWork, neutralizeBus, repository)
         {
         }
     }
@@ -39,9 +39,9 @@ namespace Neutralize.Application.Services
         protected CrudAppService(
             IMapper mapper,
             IUnitOfWork unitOfWork,
-            IInMemoryBus inMemoryBus,
+            INeutralizeBus neutralizeBus,
             IRepository<TEntity, long> repository
-        ) : base(mapper, unitOfWork, inMemoryBus, repository)
+        ) : base(mapper, unitOfWork, neutralizeBus, repository)
         {
         }
     }
@@ -54,9 +54,9 @@ namespace Neutralize.Application.Services
         protected CrudAppService(
             IMapper mapper,
             IUnitOfWork unitOfWork,
-            IInMemoryBus inMemoryBus,
+            INeutralizeBus neutralizeBus,
             IRepository<TEntity, long> repository
-        ) : base(mapper, unitOfWork, inMemoryBus, repository)
+        ) : base(mapper, unitOfWork, neutralizeBus, repository)
         {
         }
     }

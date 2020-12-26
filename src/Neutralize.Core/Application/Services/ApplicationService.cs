@@ -10,24 +10,24 @@ namespace Neutralize.Application.Services
     {
         protected IMapper Mapper { get; }
         protected IUnitOfWork UnitOfWork { get; }
-        protected IInMemoryBus InMemoryBus { get; }
+        protected INeutralizeBus NeutralizeBus { get; }
 
         protected ApplicationService(
             IMapper mapper,
             IUnitOfWork unitOfWork,
-            IInMemoryBus inMemoryBus
+            INeutralizeBus neutralizeBus
         )
         {
             Mapper = mapper;
             UnitOfWork = unitOfWork;
-            InMemoryBus = inMemoryBus;
+            NeutralizeBus = neutralizeBus;
         }
 
         protected virtual async Task AddNotificationError(
             string type, string message
         )
         {
-            await InMemoryBus.RaiseEvent(DomainNotification.Create(type, message));
+            await NeutralizeBus.RaiseEvent(DomainNotification.Create(type, message));
         }
 
         public abstract void Dispose();

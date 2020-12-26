@@ -26,9 +26,9 @@ namespace Neutralize.Application.Services
         protected CrudAppServiceBase(
             IMapper mapper,
             IUnitOfWork unitOfWork,
-            IInMemoryBus inMemoryBus,
+            INeutralizeBus neutralizeBus,
             IRepository<TEntity, long> repository
-        ) : base(mapper, unitOfWork, inMemoryBus)
+        ) : base(mapper, unitOfWork, neutralizeBus)
         {
             Repository = repository;
         }

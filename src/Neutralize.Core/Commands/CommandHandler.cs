@@ -10,17 +10,17 @@ namespace Neutralize.Commands
     public abstract class CommandHandler : IDisposable
     {
         protected IUnitOfWork UnitOfWork { get; }
-        protected IInMemoryBus InMemoryBus { get; }
+        protected INeutralizeBus NeutralizeBus { get; }
         protected DomainNotificationHandler Notifications { get; }
 
         protected CommandHandler(
             IUnitOfWork unitOfWork,
-            IInMemoryBus inMemoryBus,
+            INeutralizeBus neutralizeBus,
             INotificationHandler<DomainNotification> notifications
         )
         {
             UnitOfWork = unitOfWork;
-            InMemoryBus = inMemoryBus;
+            NeutralizeBus = neutralizeBus;
             Notifications = notifications as DomainNotificationHandler;
         }
 
@@ -49,7 +49,7 @@ namespace Neutralize.Commands
             string type, string message
         )
         {
-            return InMemoryBus.RaiseEvent(DomainNotification.Create(type, message));
+            return NeutralizeBus.RaiseEvent(DomainNotification.Create(type, message));
         }
 
         public abstract void Dispose();

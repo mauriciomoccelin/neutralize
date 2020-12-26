@@ -4,10 +4,6 @@ using FluentValidation.Results;
 
 namespace Neutralize.Commands
 {
-    public abstract class Command : Command<Guid>
-    {
-    }
-    
     public abstract class Command<TId> : Message
     {
         public TId Id { get; protected set; }
@@ -19,8 +15,8 @@ namespace Neutralize.Commands
             Timestamp = DateTime.Now; 
             ValidationResult = new ValidationResult();
         }
-        
-        public abstract bool Validate();
+
+        public virtual bool Validate() => throw new NotImplementedException();
         public virtual bool IsValid() => ValidationResult.IsValid;
     }
 }

@@ -10,19 +10,19 @@ namespace Neutralize.Events
     public abstract class EventHandler<TEvent> : INotificationHandler<TEvent> where TEvent : Event
     {
         protected IUnitOfWork UnitOfWork { get; }
-        protected IInMemoryBus InMemoryBus { get; }
+        protected INeutralizeBus NeutralizeBus { get; }
 
-        protected EventHandler(IUnitOfWork unitOfWork, IInMemoryBus inMemoryBus)
+        protected EventHandler(IUnitOfWork unitOfWork, INeutralizeBus neutralizeBus)
         {
             UnitOfWork = unitOfWork;
-            InMemoryBus = inMemoryBus;
+            NeutralizeBus = neutralizeBus;
         }
 
         protected async Task AddNotificationError(
             string type, string message
         )
         {
-            await InMemoryBus.RaiseEvent(DomainNotification.Create(type, message));
+            await NeutralizeBus.RaiseEvent(DomainNotification.Create(type, message));
         }
 
         protected async Task<bool> Commit()
