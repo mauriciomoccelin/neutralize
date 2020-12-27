@@ -13,7 +13,7 @@ namespace Neutralize.Kafka
         public static IServiceCollection AddKafka(
             this IServiceCollection services,
             IConfiguration configuration,
-            Action<IKafkaConfiguration> option
+            Action<IKafkaConfiguration> option = null
         )
         {
             var kafkaConfiguration = KafkaConfiguration.Create(
@@ -24,7 +24,7 @@ namespace Neutralize.Kafka
                 configuration["kafka:topicSuccessDelivery"]
             );
 
-            option.Invoke(kafkaConfiguration);
+            option?.Invoke(kafkaConfiguration);
 
             services.AddSingleton<IKafkaConfiguration>(sp => kafkaConfiguration);
             
