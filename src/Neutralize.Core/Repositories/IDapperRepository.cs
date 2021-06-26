@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Neutralize.Application;
 using Neutralize.Models;
 
 namespace Neutralize.Repositories
 {
     public interface IDapperRepository<TEntity, in TId> : IDisposable
-        where TEntity : IEntity
+        where TEntity : IEntity<TId>
         where TId : struct
     {
         DbConnection Connection { get; }
@@ -19,7 +20,7 @@ namespace Neutralize.Repositories
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<long> CountAsync(Expression<Func<TEntity, bool>> predicate);
         Task<TEntity> FirstOrAsync(Expression<Func<TEntity, bool>> predicate, TEntity @default = default(TEntity));
-        Task<IEnumerable<TEntity>> GetAllPagedAsync(
+        Task<PagedResultDto<TEntity>> GetAllPagedAsync(
             int page,
             int itemsPerPage,
             Expression<Func<TEntity, bool>> predicate,

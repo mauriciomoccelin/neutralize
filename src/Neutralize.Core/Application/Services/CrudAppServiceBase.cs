@@ -10,24 +10,25 @@ using Neutralize.UoW;
 
 namespace Neutralize.Application.Services
 {
-    public abstract class CrudAppServiceBase<TEntity, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput>
-        : ApplicationService, ICrudAppService<long, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput>
-        where TEntity : IEntity
-        where TCreateDto : IEntityDto<long>
-        where TUpdateDto : IEntityDto<long>
-        where TDeleteDto : IEntityDto<long>
-        where TGetDto : IEntityDto<long>
-        where TListDto : IEntityDto<long>
-        where TGetInput : IEntityDto<long>
+    public abstract class CrudAppServiceBase<TId, TEntity, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput>
+        : ApplicationService, ICrudAppService<TId, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput>
+        where TId : struct
+        where TEntity : IEntity<TId>
+        where TCreateDto : IEntityDto<TId>
+        where TUpdateDto : IEntityDto<TId>
+        where TDeleteDto : IEntityDto<TId>
+        where TGetDto : IEntityDto<TId>
+        where TListDto : IEntityDto<TId>
+        where TGetInput : IEntityDto<TId>
         where TListInput : PagedRequestDto
     {
-        protected IRepository<TEntity, long> Repository { get; }
+        protected IRepository<TEntity, TId> Repository { get; }
 
         protected CrudAppServiceBase(
             IMapper mapper,
             IUnitOfWork unitOfWork,
             INeutralizeBus neutralizeBus,
-            IRepository<TEntity, long> repository
+            IRepository<TEntity, TId> repository
         ) : base(mapper, unitOfWork, neutralizeBus)
         {
             Repository = repository;
@@ -48,17 +49,17 @@ namespace Neutralize.Application.Services
             return Mapper.Map<TGetDto>(entity);
         }
 
-        protected virtual TEntity MapToEntity<TDto>(TDto dto) where TDto : IEntityDto<long>
+        protected virtual TEntity MapToEntity<TDto>(TDto dto) where TDto : IEntityDto<TId>
         {
             return Mapper.Map<TEntity>(dto);
         }
 
-        protected virtual TEntity MapToEntity<TDto>(TDto dto, TEntity entity) where TDto : IEntityDto<long>
+        protected virtual TEntity MapToEntity<TDto>(TDto dto, TEntity entity) where TDto : IEntityDto<TId>
         {
             return Mapper.Map(dto, entity);
         }
 
-        public virtual async Task<long> Create(TCreateDto input)
+        public virtual async Task<TId> Create(TCreateDto input)
         {
             var entity = MapToEntity(input);
 
@@ -68,7 +69,7 @@ namespace Neutralize.Application.Services
             return entity.Id;
         }
 
-        public virtual async Task<long> Update(TUpdateDto input)
+        public virtual async Task<TId> Update(TUpdateDto input)
         {
             var entity = await Repository.GetAsync(input.Id);
             entity = MapToEntity(input, entity);

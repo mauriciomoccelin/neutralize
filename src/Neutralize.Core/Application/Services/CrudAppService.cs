@@ -6,56 +6,59 @@ using Neutralize.UoW;
 
 namespace Neutralize.Application.Services
 {
-    public abstract class CrudAppService<TEntity, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput>
-        : CrudAppServiceBase<TEntity, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput>
-        where TEntity : IEntity
-        where TCreateDto : IEntityDto<long>
-        where TUpdateDto : IEntityDto<long>
-        where TDeleteDto : IEntityDto<long>
-        where TGetDto : IEntityDto<long>
-        where TListDto : IEntityDto<long>
-        where TGetInput : IEntityDto<long>
+    public abstract class CrudAppService<TId, TEntity, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput>
+        : CrudAppServiceBase<TId, TEntity, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TListDto, TGetInput, TListInput>
+        where TId: struct
+        where TEntity : IEntity<TId>
+        where TCreateDto : IEntityDto<TId>
+        where TUpdateDto : IEntityDto<TId>
+        where TDeleteDto : IEntityDto<TId>
+        where TGetDto : IEntityDto<TId>
+        where TListDto : IEntityDto<TId>
+        where TGetInput : IEntityDto<TId>
         where TListInput : PagedRequestDto
     {
         protected CrudAppService(
             IMapper mapper,
             IUnitOfWork unitOfWork,
             INeutralizeBus neutralizeBus,
-            IRepository<TEntity, long> repository
+            IRepository<TEntity, TId> repository
         ) : base(mapper, unitOfWork, neutralizeBus, repository)
         {
         }
     }
 
-    public abstract class CrudAppService<TEntity, TId, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TGetInput> :
-        CrudAppServiceBase<TEntity, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TGetDto, TGetInput, PagedRequestDto>
-        where TEntity : IEntity
-        where TCreateDto : IEntityDto<long>
-        where TUpdateDto : IEntityDto<long>
-        where TDeleteDto : IEntityDto<long>
-        where TGetDto : IEntityDto<long>
-        where TGetInput : IEntityDto<long>
+    public abstract class CrudAppService<TId, TEntity, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TGetInput> :
+        CrudAppServiceBase<TId, TEntity, TCreateDto, TUpdateDto, TDeleteDto, TGetDto, TGetDto, TGetInput, PagedRequestDto>
+        where TId: struct
+        where TEntity : IEntity<TId>
+        where TCreateDto : IEntityDto<TId>
+        where TUpdateDto : IEntityDto<TId>
+        where TDeleteDto : IEntityDto<TId>
+        where TGetDto : IEntityDto<TId>
+        where TGetInput : IEntityDto<TId>
     {
         protected CrudAppService(
             IMapper mapper,
             IUnitOfWork unitOfWork,
             INeutralizeBus neutralizeBus,
-            IRepository<TEntity, long> repository
+            IRepository<TEntity, TId> repository
         ) : base(mapper, unitOfWork, neutralizeBus, repository)
         {
         }
     }
 
-    public abstract class CrudAppService<TEntity, TDto> :
-        CrudAppServiceBase<TEntity, TDto, TDto, TDto, TDto, TDto, IEntityDto<long>, PagedRequestDto>
-        where TEntity : IEntity
-        where TDto : IEntityDto<long>
+    public abstract class CrudAppService<TId, TEntity, TDto> :
+        CrudAppServiceBase<TId, TEntity, TDto, TDto, TDto, TDto, TDto, IEntityDto<TId>, PagedRequestDto>
+        where TId: struct
+        where TEntity : IEntity<TId>
+        where TDto : IEntityDto<TId>
     {
         protected CrudAppService(
             IMapper mapper,
             IUnitOfWork unitOfWork,
             INeutralizeBus neutralizeBus,
-            IRepository<TEntity, long> repository
+            IRepository<TEntity, TId> repository
         ) : base(mapper, unitOfWork, neutralizeBus, repository)
         {
         }

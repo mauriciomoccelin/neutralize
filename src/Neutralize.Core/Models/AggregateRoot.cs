@@ -4,7 +4,7 @@ using Neutralize.Events;
 
 namespace Neutralize.Models
 {
-    public class AggregateRoot : Entity, IAggregateRoot
+    public class AggregateRoot : Entity<Guid>, IAggregateRoot
     {
         protected AggregateRoot() { }
 

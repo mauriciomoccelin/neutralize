@@ -10,11 +10,12 @@ using Neutralize.Models;
 using Neutralize.Repositories;
 using Dapper;
 using DapperExtensions;
+using Neutralize.Application;
 
 namespace Neutralize.Dapper
 {
     public abstract class DapperRepository<TEntity, TId> : IDapperRepository<TEntity, TId>
-        where TEntity : Entity
+        where TEntity : Entity<TId>
         where TId : struct
     {
         public DbConnection Connection { get; }
@@ -67,7 +68,7 @@ namespace Neutralize.Dapper
             return Task.FromResult(result);
         }
 
-        public Task<IEnumerable<TEntity>> GetAllPagedAsync(
+        public Task<PagedResultDto<TEntity>> GetAllPagedAsync(
             int page,
             int itemsPerPage,
             Expression<Func<TEntity, bool>> predicate,
@@ -78,9 +79,12 @@ namespace Neutralize.Dapper
             var _sort = sort.ToSortable<TEntity>(ascending).ToList();
             var _predicate = predicate.ToPredicateGroup<TEntity, TId>();
 
+            var total = Connection.Count<TEntity>(_predicate);
             var result = Connection.GetPage<TEntity>(_predicate, _sort, page, itemsPerPage);
 
-            return Task.FromResult(result);
+            var pageResult = new PagedResultDto<TEntity>(total, result);
+
+            return Task.FromResult(pageResult);
         }
 
         public Task<IEnumerable<TEntity>> GetAllAsync(

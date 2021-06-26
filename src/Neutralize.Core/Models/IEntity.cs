@@ -1,7 +1,7 @@
 namespace Neutralize.Models
 {
-    public interface IEntity
+    public interface IEntity<out TId> where TId: struct
     {
-        long Id { get;}
+        TId Id { get;}
     }
 }

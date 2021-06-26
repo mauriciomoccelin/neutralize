@@ -8,8 +8,8 @@ using Neutralize.Models;
 namespace Neutralize.Repositories
 {
     public interface IRepository<TEntity, in TId> : IDisposable
-        where TEntity : IEntity
         where TId : struct
+        where TEntity : IEntity<TId>
     {
         Task<bool> Commit();
         Task AddAsync(TEntity entity);

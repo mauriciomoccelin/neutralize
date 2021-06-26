@@ -9,7 +9,7 @@ using DapperExtensions;
 namespace Neutralize.Dapper.Extensions.Filters
 {
     internal class DapperExpressionVisitor<TEntity, TId> : ExpressionVisitor
-        where TEntity : Entity where TId: struct
+        where TEntity : Entity<TId> where TId: struct
     {
         private PredicateGroup _pg;
         private bool unarySpecified;
@@ -88,7 +88,7 @@ namespace Neutralize.Dapper.Extensions.Filters
             var pg = currentGroup;
             var fieldExp = Expression.Lambda<Func<TEntity, object>>(
                 Expression.Convert(exp, typeof(object)),
-                exp.Expression as ParameterExpression
+                (exp.Expression as ParameterExpression)!
             );
             var field = Predicates.Field(fieldExp, op, value, not);
             
