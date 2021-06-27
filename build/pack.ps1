@@ -39,7 +39,6 @@ foreach ($Project in $Projects) {
     Write-Host $ProjectName -ForegroundColor Green
 }
 
-return
 Write-Host '## PUSH PACKAGES ##############################################################' -ForegroundColor DarkGreen
 
 Get-ChildItem $Nupkgs -Filter *.nupkg | 
