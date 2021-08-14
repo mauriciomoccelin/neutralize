@@ -17,12 +17,9 @@ namespace Neutralize.Application
 
         public void Normalize()
         {
-            if (PageSize > 1000)
-            {
-                PageSize = 1000;
-            }
+            if (PageSize > 1000) PageSize = 1000;
 
-            Keyword = Keyword?.ToLower();
+            Keyword = Keyword?.ToLower().Trim();
         }
     }
 }

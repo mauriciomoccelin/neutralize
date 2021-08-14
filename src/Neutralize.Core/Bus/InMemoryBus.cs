@@ -25,9 +25,10 @@ namespace Neutralize.Bus
             IEnumerable<TCommand> commands
         ) where TId : struct where TCommand : Command<TId>
         {
-            return commands == null || commands?.Any() == false
+            var enumerable = commands as TCommand[] ?? commands.ToArray();
+            return enumerable?.Any() == false
                 ? Task.CompletedTask
-                : Task.WhenAll(commands.Select(command => Mediator.Send(command)));
+                : Task.WhenAll(enumerable.Select(command => Mediator.Send(command)));
         }
 
         public Task<TResponse> SendCommand<TCommand, TId, TResponse>(

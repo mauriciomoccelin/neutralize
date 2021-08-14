@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using FluentAssertions;
 using MediatR;
 using Moq;
 using Neutralize.Bus;
@@ -139,12 +140,11 @@ namespace Neutralize.Core.Test
             // Arrange
 
             // Act
-            bus.SendCommand<Command<Guid>, Guid>((IEnumerable<Command<Guid>>)null);
 
             // Assert
-            fixture.Mocker
-                .GetMock<IMediator>()
-                .Verify(x => x.Send(It.IsAny<IEnumerable<Command<Guid>>>(), It.IsAny<CancellationToken>()), Times.Never);
+            bus.Awaiting(b => b.SendCommand<Command<Guid>, Guid>((IEnumerable<Command<Guid>>) null))
+                .Should()
+                .ThrowAsync<ArgumentNullException>();
         }
         
         [Trait("Category", "Core - Bus")]
