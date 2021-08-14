@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <PackageReference Include="DapperExtensions.DotnetCore" Version="1.0.1" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
     </ItemGroup>
 
 </Project>

@@ -4,8 +4,9 @@ using Neutralize.Events;
 
 namespace Neutralize.Models
 {
-    public interface IAggregateRoot : IEntity<Guid>
+    public interface IAggregateRoot<out TId> : IEntity<TId> where TId: struct
     {
+        Guid AggregateId { get; set; }
         IReadOnlyCollection<Event> Events { get; }
     }
 }
