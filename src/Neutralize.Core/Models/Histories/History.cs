@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Neutralize.Models.Histories
 {
@@ -6,6 +9,7 @@ namespace Neutralize.Models.Histories
     {
         public Guid? AggregateId { get; private set; }
 
+        public string Hash { get; private set; }
         public string Data { get; private set; }
         public long UserId { get; private set; }
         public string Command { get; private set; }
@@ -40,7 +44,18 @@ namespace Neutralize.Models.Histories
             return this;
         }
 
-        public class Factory
+        public History CalcHash()
+        {
+            var shManaged = SHA1Managed.Create();
+            var content = string.Join(Data, Id, @"^Mk+7Nd\N~{KG_aG");
+            var bytes = Encoding.UTF8.GetBytes(content);
+            var hash = shManaged.ComputeHash(bytes);
+
+            Hash = string.Concat(hash.Select(b => b.ToString("x2")));
+            return this;
+        }
+
+        public static class Factory
         {
             public static History Criar(
                 string data,
@@ -51,9 +66,11 @@ namespace Neutralize.Models.Histories
                 Guid? aggregateId = null
             )
             {
-                return new History(
+                var history = new History(
                     data, userId, command, default, creationTime, fullEntityName, aggregateId
-                ).CalcRuntime();
+                );
+
+                return history.CalcRuntime().CalcHash();
             }
         }
     }
