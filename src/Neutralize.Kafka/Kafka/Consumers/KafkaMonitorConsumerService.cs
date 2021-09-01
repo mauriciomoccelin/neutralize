@@ -1,11 +1,11 @@
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Confluent.Kafka;
 using MediatR;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Neutralize.Kafka.Consumers
 {
@@ -31,8 +31,10 @@ namespace Neutralize.Kafka.Consumers
             return Task.CompletedTask;
         }
 
-        public Task StopAsync(CancellationToken stoppingToken)
+        public Task StopAsync(CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             Console.WriteLine("Kafka consumer is stoping.");
             return Task.CompletedTask;
         }
