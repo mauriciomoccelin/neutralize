@@ -38,14 +38,14 @@ foreach ($Project in $Projects) {
     
     Write-Host $ProjectName -ForegroundColor Green
 }
-return
+
 Write-Host '## PUSH PACKAGES ##############################################################' -ForegroundColor DarkGreen
 
 Get-ChildItem $Nupkgs -Filter *.nupkg | 
     Foreach-Object {
     dotnet nuget push $_.FullName `
-        --source $configuration.Server `
-        --api-key $configuration.Key `
+        --source $env:NUGET_SERVER `
+        --api-key $env:NUGET_KEY `
         --skip-duplicate `
         --timeout 1800
     }

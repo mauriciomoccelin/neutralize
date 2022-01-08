@@ -2,39 +2,36 @@ name: .NET
 
 on:
   push:
-    branches:    
-      - 'master'
+    branches:
+      - "master"
   pull_request:
     branches:
-      - '!master'
-      - 'feature/*'
-      - 'maintenance/*'
+      - "*/*"
 
 jobs:
   pack:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      if: success()
-      run: dotnet build --no-restore
-    - name: Test
-      if: success()
-      run: dotnet test --no-build --verbosity normal
-      working-directory: test/Neutralize.Core.Test
-    - shell: pwsh
-      if: (success() && contains('refs/heads/master', github.ref))
-      working-directory: build
-      env:
-        NUGET_KEY: ${{ secrets.NUGET_KEY }}
-        NUGET_SERVER: ${{ secrets.NUGET_SERVER }}
-      run: |
-        ./pack.ps1
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        if: success()
+        run: dotnet build --no-restore
+      - name: Test
+        if: success()
+        run: dotnet test --no-build --verbosity normal
+        working-directory: test/Neutralize.Core.Test
+      - shell: pwsh
+        if: (success() && contains('refs/heads/master', github.ref))
+        working-directory: build
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+          NUGET_SERVER: ${{ secrets.NUGET_SERVER }}
+        run: |
+          ./pack.ps1
