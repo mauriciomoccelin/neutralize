@@ -17,7 +17,7 @@ namespace Neutralize.Commands
             ValidationResult = new ValidationResult();
         }
 
-        public void Normalize() { }
+        public virtual void Normalize() { }
         public virtual bool IsValid() => ValidationResult.IsValid;
         public virtual bool Validate() => throw new NotImplementedException();
     }
