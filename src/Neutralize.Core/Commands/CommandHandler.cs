@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using Neutralize.Bus;
 using Neutralize.Notifications;
 using Neutralize.UoW;
@@ -9,16 +10,19 @@ namespace Neutralize.Commands
 {
     public abstract class CommandHandler : IDisposable
     {
+        protected IMapper Mapper { get; }
         protected IUnitOfWork UnitOfWork { get; }
         protected INeutralizeBus NeutralizeBus { get; }
         protected DomainNotificationHandler Notifications { get; }
 
         protected CommandHandler(
+            IMapper mapper,
             IUnitOfWork unitOfWork,
             INeutralizeBus neutralizeBus,
             INotificationHandler<DomainNotification> notifications
         )
         {
+            Mapper = mapper;
             UnitOfWork = unitOfWork;
             NeutralizeBus = neutralizeBus;
             Notifications = notifications as DomainNotificationHandler;
