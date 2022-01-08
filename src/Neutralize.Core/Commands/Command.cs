@@ -6,7 +6,7 @@ namespace Neutralize.Commands
 {
     public abstract class Command<TId> : Message
     {
-        public TId Id { get; protected set; }
+        public TId Id { get; set; }
         public DateTime Timestamp { get; private set; }
         public ValidationResult ValidationResult { get; protected set; }
 
