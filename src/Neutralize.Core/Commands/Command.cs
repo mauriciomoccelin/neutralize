@@ -1,10 +1,11 @@
 using System;
 using Neutralize.Events;
 using FluentValidation.Results;
+using Neutralize.Application;
 
 namespace Neutralize.Commands
 {
-    public abstract class Command<TId> : Message
+    public abstract class Command<TId> : Message, IShouldNormalizer
     {
         public TId Id { get; set; }
         public DateTime Timestamp { get; private set; }
@@ -16,8 +17,9 @@ namespace Neutralize.Commands
             ValidationResult = new ValidationResult();
         }
 
-        public virtual bool Validate() => throw new NotImplementedException();
+        public void Normalize() { }
         public virtual bool IsValid() => ValidationResult.IsValid;
+        public virtual bool Validate() => throw new NotImplementedException();
     }
 }
 
