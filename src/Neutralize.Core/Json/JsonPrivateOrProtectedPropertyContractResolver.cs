@@ -10,15 +10,11 @@ namespace Neutralize.Json
         {
             var prop = base.CreateProperty(member, memberSerialization);
 
-            if (!prop.Writable)
-            {
-                var property = member as PropertyInfo;
-                if (property != null)
-                {
-                    var hasPrivateOrProtectedSetter = property.GetSetMethod(true) != null;
-                    prop.Writable = hasPrivateOrProtectedSetter;
-                }
-            }
+            if (prop.Writable) return prop;
+            var property = member as PropertyInfo;
+            if (property == null) return prop;
+            var hasPrivateOrProtectedSetter = property.GetSetMethod(true) != null;
+            prop.Writable = hasPrivateOrProtectedSetter;
 
             return prop;
         }
