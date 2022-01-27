@@ -6,12 +6,12 @@ namespace Neutralize.Identity
 {
     public interface IAspNetUser
     {
+        HttpContext GetHttpContext();
         string Name { get; }
         long GetUserId();
         string GetUserEmail();
         bool IsAutenticated();
-        bool IsInRole(string role);
+        Claim GetClaim(string type);
         IEnumerable<Claim> GetUserClaims();
-        HttpContext GetHttpContext();
     }
 }

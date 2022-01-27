@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using Bogus;
 using Moq.AutoMock;
 using Neutralize.Bus;
 using Neutralize.Commands;
 using Neutralize.Events;
+using Neutralize.Identity;
 using Xunit;
 
 namespace Neutralize.Core.Test
@@ -16,7 +18,15 @@ namespace Neutralize.Core.Test
     public class NeutralizeCoreFixture : IDisposable
     {
         public AutoMocker Mocker;
+        public readonly Faker Faker;
+
         public InMemoryBus Bus;
+        public IAspNetUser AspNetUser;
+
+        public NeutralizeCoreFixture()
+        {
+            Faker = new Faker();
+        }
         
         public void Dispose() { }
 
@@ -24,8 +34,20 @@ namespace Neutralize.Core.Test
         {
             Mocker = new AutoMocker();
             Bus = Mocker.CreateInstance<InMemoryBus>();
-            
             return Bus;
+        }
+        
+        public IAspNetUser GenereteDefaultNeutralizeAspNetUser()
+        {
+            Mocker = new AutoMocker();
+            AspNetUser = Mocker.CreateInstance<AspNetUser>();
+            return AspNetUser;
+        }
+
+        public IEnumerable<Claim> GeneretUserClaims()
+        {
+            yield return new Claim(ClaimTypes.Email, Faker.Internet.Email().ToLower());
+            yield return new Claim(ClaimTypes.NameIdentifier, Faker.Random.Long(1).ToString());
         }
         
         public Command<Guid> GenereteGenericCommand()
