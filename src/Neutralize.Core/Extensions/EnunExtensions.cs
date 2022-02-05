@@ -6,7 +6,7 @@ namespace Neutralize.Extensions
 {
     public static class EnumExtensions
     {
-        public static string GetDescription(this Enum value, bool upper = true)
+        public static string GetDescription(this Enum value, bool upper = false)
         {
             var fi = value.GetType().GetField(value.ToString());
             var attributes = fi.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[];
