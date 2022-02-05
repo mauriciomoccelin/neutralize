@@ -28,15 +28,20 @@ namespace Neutralize.Commands
             Notifications = notifications as DomainNotificationHandler;
         }
 
-        protected async Task CheckErrors<TId>(
+        protected async Task<bool> CheckErrors<TId>(
             Command<TId> command
         ) where TId: struct
         {
             command.Validate();
-            foreach (var error in command.ValidationResult.Errors)
+
+            if (command.IsValid()) command.Normalize();
+
+            foreach (var error in command.GetErrors())
             {
                 await AddNotificationError(command.MessageType, error.ErrorMessage);
             }
+
+            return command.IsValid();
         }
 
         protected async Task<bool> Commit()
