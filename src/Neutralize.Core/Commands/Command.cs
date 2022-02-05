@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Neutralize.Events;
 using FluentValidation.Results;
 using Neutralize.Application;
@@ -20,6 +21,7 @@ namespace Neutralize.Commands
         public virtual void Normalize() { }
         public virtual bool IsValid() => ValidationResult.IsValid;
         public virtual bool Validate() => throw new NotImplementedException();
+        public virtual IEnumerable<ValidationFailure> GetErrors() => ValidationResult.Errors;
     }
 }
 
