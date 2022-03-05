@@ -12,7 +12,7 @@ namespace Neutralize.Core.Test
     {
         [Trait("Category", "Core - EnumExtensions")]
         [Fact(DisplayName = "Get description from enum using EnumExtensions")]
-        public async void EnumExtensions_GetDescription_WithSuccess()
+        public void EnumExtensions_GetDescription_WithSuccess()
         {
             // Arrange
             var itens = new Collection<SelectionDto<int>>();

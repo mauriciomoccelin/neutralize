@@ -12,6 +12,7 @@ namespace Neutralize.Identity
         string GetUserEmail();
         bool IsAutenticated();
         Claim GetClaim(string type);
+        bool TryGetClaim(string type, out Claim claim);
         IEnumerable<Claim> GetUserClaims();
     }
 }
