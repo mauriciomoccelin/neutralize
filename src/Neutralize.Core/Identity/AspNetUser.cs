@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
@@ -24,6 +25,20 @@ namespace Neutralize.Identity
         public Claim GetClaim(string type)
         {
             return GetUserClaims().First(claim => claim.Type == type);
+        }
+        
+        public bool TryGetClaim(string type, out Claim claim)
+        {
+            try
+            {
+                claim = GetClaim(type);
+                return true;
+            }
+            catch
+            {
+                claim = null;
+                return false;
+            }
         }
 
         public string GetUserEmail()

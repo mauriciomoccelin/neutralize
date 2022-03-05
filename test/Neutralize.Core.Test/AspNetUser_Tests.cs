@@ -85,6 +85,28 @@ namespace Neutralize.Core.Test
         }
         
         [Trait("Category", "Core - AspNetUser")]
+        [Fact(DisplayName = "Try check if current user in request specific claim value")]
+        public void IAspNetUser_TryGetUserSpecificClaimValue_WithSuccess()
+        {
+            // Arrange
+            fixture.Mocker
+                .GetMock<IHttpContextAccessor>()
+                .Setup(h => h.HttpContext.User.Claims)
+                .Returns(fixture.GeneretUserClaims());
+
+            // Act
+            var success = aspNetUser.TryGetClaim(ClaimTypes.Email, out var claim);
+
+            // Assert
+            success.Should().BeTrue();
+            claim.Should().NotBeNull();
+
+            fixture.Mocker
+                .GetMock<IHttpContextAccessor>()
+                .Verify(x => x.HttpContext.User.Claims, Times.Once);
+        }
+        
+        [Trait("Category", "Core - AspNetUser")]
         [Fact(DisplayName = "Check if current user in request specific claim value")]
         public void IAspNetUser_GetUserSpecificClaimValues_WithFail()
         {
@@ -99,6 +121,28 @@ namespace Neutralize.Core.Test
 
             // Assert
             func.Should().Throw<InvalidOperationException>();
+
+            fixture.Mocker
+                .GetMock<IHttpContextAccessor>()
+                .Verify(x => x.HttpContext.User.Claims, Times.Once);
+        }
+        
+        [Trait("Category", "Core - AspNetUser")]
+        [Fact(DisplayName = "Try check if current user in request specific claim value")]
+        public void IAspNetUser_TryGetUserSpecificClaimValues_WithFail()
+        {
+            // Arrange
+            fixture.Mocker
+                .GetMock<IHttpContextAccessor>()
+                .Setup(h => h.HttpContext.User.Claims)
+                .Returns(fixture.GeneretUserClaims());
+
+            // Act
+            var success = aspNetUser.TryGetClaim("non-existent claim", out var claim);
+
+            // Assert
+            success.Should().BeFalse();
+            claim.Should().BeNull();
 
             fixture.Mocker
                 .GetMock<IHttpContextAccessor>()
