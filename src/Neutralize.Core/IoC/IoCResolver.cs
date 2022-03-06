@@ -30,5 +30,16 @@ namespace Neutralize.IoC
             
             return result;
         }
+        
+        public static TResult ServiceWrapper<TResult>(Func<IServiceProvider, TResult> func)
+        {
+            using var scope = Provider.CreateScope();
+            var serviceProvider = scope.ServiceProvider;
+            var result = func.Invoke(serviceProvider);
+
+            scope.Dispose();
+            
+            return result;
+        }
     }
 }
