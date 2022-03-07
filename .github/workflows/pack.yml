@@ -26,7 +26,6 @@ jobs:
       - name: Test
         if: success()
         run: dotnet test --no-build --verbosity normal
-        working-directory: test/Neutralize.Core.Test
       - shell: pwsh
         if: (success() && contains('refs/heads/master', github.ref))
         working-directory: build

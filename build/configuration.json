@@ -1,18 +1,22 @@
 [
     {
         "path": "src/Neutralize.Core/Neutralize.Core.csproj",
-        "version": "5.5.3"
+        "version": "5.3.4"
     },
     {
         "path": "src/Neutralize.Dapper/Neutralize.Dapper.csproj",
-        "version": "5.5.3"
+        "version": "5.3.4"
     },
     {
         "path": "src/Neutralize.EFCore/Neutralize.EFCore.csproj",
-        "version": "5.5.3"
+        "version": "5.3.4"
     },
     {
         "path": "src/Neutralize.Kafka/Neutralize.Kafka.csproj",
-        "version": "5.5.3"
+        "version": "5.3.4"
+    },
+    {
+        "path": "src/Neutralize.SendGrid/Neutralize.SendGrid.csproj",
+        "version": "5.3.4"
     }
 ]
