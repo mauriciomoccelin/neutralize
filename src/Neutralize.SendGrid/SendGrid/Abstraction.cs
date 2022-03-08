@@ -1,14 +1,13 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Neutralize.Emails;
-using SendGrid;
 
 namespace Neutralize.SendGrid
 {
     public static class Abstraction
     {
         public static IServiceCollection AddSendGridEmailSender(
-            IServiceCollection service,
+            this IServiceCollection service,
             Action<SendGridEmailSenderOption> sendGridOption
         )
         {
