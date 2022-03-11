@@ -5,6 +5,7 @@ namespace Neutralize.SendGrid
     public interface ISendGridEmailSenderOption
     {
         string ApiKey { get; }
+        bool IgnoreEmailSending { get; }
         EmailAddress EmailAddressFrom { get; }
         
         public string GetApiKey();
@@ -12,5 +13,8 @@ namespace Neutralize.SendGrid
         
         public EmailAddress GetEmailFrom();
         public ISendGridEmailSenderOption SetEmailFrom(string email, string name);
+        
+        public bool GetIgnoreEmailSending();
+        public ISendGridEmailSenderOption SetIgnoreEmailSending(bool value);
     }
 }

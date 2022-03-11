@@ -16,6 +16,13 @@ namespace Neutralize.SendGrid
 
         public async Task<EmailSenderResponse> Send(EmailSenderInput input)
         {
+            if (option.GetIgnoreEmailSending())
+                return new EmailSenderResponse
+                {
+                    Success = false,
+                    Result = "The email sending was ignored."
+                };
+
             var client = new SendGridClient(option.GetApiKey());
             
             var toEmailAddress = new EmailAddress(input.EmailTo, input.NameEmailTo);
