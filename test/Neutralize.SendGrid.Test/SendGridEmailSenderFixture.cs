@@ -28,20 +28,30 @@ namespace Neutralize.SendGrid.Test
         {
             return new Faker().Internet.Password();
         }
+        
+        public string GenereteEmail()
+        {
+            return new Faker().Internet.Email();
+        }
+        
+        public string GenereteName()
+        {
+            return new Faker().Name.FullName();
+        }
 
-        public EmailSenderInput GenereteEmailSenderInput()
+        public EmailSenderInput GenereteEmailSenderInput(bool value = false)
         {
             var faker = new Faker<EmailSenderInput>()
-                .CustomInstantiator(fake => new EmailSenderInput
-                {
-                    EmailFrom = fake.Internet.Email(),
-                    NameEmailFrom = fake.Name.FullName(),
-                    EmailTo = fake.Internet.Email(),
-                    NameEmailTo = fake.Name.FullName(),
-                    Subject = fake.Lorem.Word(),
-                    HtmlContent = null,
-                    PlainTextContent = fake.Lorem.Paragraph()
-                });
+                .CustomInstantiator(
+                    fake => EmailSenderInput
+                        .Create()
+                        .SetHtmlContent(null)
+                        .SetSubject(fake.Lorem.Word())
+                        .SetSendForEmailOnOptions(value)
+                        .SetPlainTextContent(fake.Lorem.Paragraph())
+                        .SetEmailTo(fake.Internet.Email(), fake.Name.FullName())
+                        .SetEmailFrom(fake.Internet.Email(), fake.Name.FullName())
+                );
 
             return faker.Generate();
         }

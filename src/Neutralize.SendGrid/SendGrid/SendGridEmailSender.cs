@@ -19,8 +19,10 @@ namespace Neutralize.SendGrid
             var client = new SendGridClient(option.GetApiKey());
             
             var toEmailAddress = new EmailAddress(input.EmailTo, input.NameEmailTo);
-            var fromEmailAddress = new EmailAddress(input.EmailFrom, input.NameEmailFrom);
-
+            var fromEmailAddress = input.SendForEmailOnOptions
+                ? option.GetEmailFrom()
+                : new EmailAddress(input.EmailFrom, input.NameEmailFrom);
+            
             var mensagem = MailHelper.CreateSingleEmail(
                 fromEmailAddress,
                 toEmailAddress,
