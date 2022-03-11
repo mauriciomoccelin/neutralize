@@ -1,10 +1,24 @@
+using SendGrid.Helpers.Mail;
+
 namespace Neutralize.SendGrid
 {
     public class SendGridEmailSenderOption : ISendGridEmailSenderOption
     {
-        public string apiKey;
+        public string ApiKey { get; set; }
+        public EmailAddress EmailAddressFrom { get; set; }
 
-        public string GetApiKey() => apiKey;
-        public void SetApiKey(string value) => apiKey = value;
+        public string GetApiKey() => ApiKey;
+        public ISendGridEmailSenderOption SetApiKey(string value)
+        {
+            ApiKey = value;
+            return this;
+        }
+
+        public EmailAddress GetEmailFrom() => EmailAddressFrom;
+        public ISendGridEmailSenderOption SetEmailFrom(string email, string name)
+        {
+            EmailAddressFrom = new EmailAddress(email, name);
+            return this;
+        }
     }
 }
