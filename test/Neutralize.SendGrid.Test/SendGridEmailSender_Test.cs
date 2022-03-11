@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using Neutralize.Emails;
+using SendGrid.Helpers.Mail;
 using Xunit;
 
 namespace Neutralize.SendGrid.Test
@@ -18,7 +19,7 @@ namespace Neutralize.SendGrid.Test
         }
         
         [Trait("EmailSend", "SendGrid")]
-        [Fact(DisplayName = "Send e-mail with fail because the api key is wrong")]
+        [Fact(DisplayName = "Send e-mail default with fail because the api key is wrong")]
         public async Task SendEmailWithFail()
         {
             // Arrange
@@ -28,6 +29,31 @@ namespace Neutralize.SendGrid.Test
                 .Returns(fixture.GenereteApiKey);
 
             var input = fixture.GenereteEmailSenderInput();
+            
+            // Act
+            var response = await emailSender.Send(input);
+
+            // Assert
+            response.Success.Should().BeFalse();
+            response.Result.Should().Contain("authorization grant", "API_KEY is wrong");
+        }
+        
+        [Trait("EmailSend", "SendGrid")]
+        [Fact(DisplayName = "Send e-mail for email option from with fail because the api key is wrong")]
+        public async Task SendEmailWithFailForConfigurationOptions()
+        {
+            // Arrange
+            var sendGridEmailSenderOption = fixture.Mocker.GetMock<ISendGridEmailSenderOption>();
+
+            sendGridEmailSenderOption
+                .Setup(x => x.GetApiKey())
+                .Returns(fixture.GenereteApiKey);
+            
+            sendGridEmailSenderOption
+                .Setup(x => x.GetEmailFrom())
+                .Returns(() => new EmailAddress(fixture.GenereteEmail(), fixture.GenereteName()));
+
+            var input = fixture.GenereteEmailSenderInput(true);
             
             // Act
             var response = await emailSender.Send(input);
