@@ -80,7 +80,7 @@ namespace Neutralize.SendGrid.Test
             var response = await emailSender.Send(input);
 
             // Assert
-            response.Success.Should().BeFalse();
+            response.Success.Should().BeTrue();
             response.Result.Should().Contain("The email sending was ignored.");
         }
         
