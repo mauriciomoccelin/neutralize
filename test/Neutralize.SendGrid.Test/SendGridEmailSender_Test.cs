@@ -64,6 +64,27 @@ namespace Neutralize.SendGrid.Test
         }
         
         [Trait("EmailSend", "SendGrid")]
+        [Fact(DisplayName = "Ignore sending e-mail because was ignored by configuration")]
+        public async Task IgnoreSendEmailWithFailForConfigurationOptions()
+        {
+            // Arrange
+            var sendGridEmailSenderOption = fixture.Mocker.GetMock<ISendGridEmailSenderOption>();
+
+            sendGridEmailSenderOption
+                .Setup(x => x.GetIgnoreEmailSending())
+                .Returns(true);
+
+            var input = fixture.GenereteEmailSenderInput(true);
+            
+            // Act
+            var response = await emailSender.Send(input);
+
+            // Assert
+            response.Success.Should().BeFalse();
+            response.Result.Should().Contain("The email sending was ignored.");
+        }
+        
+        [Trait("EmailSend", "SendGrid")]
         [Fact(DisplayName = "Send e-mail with sucess", Skip = "Needs API_KEY")]
         public async Task SendEmailWithSuccess()
         {
