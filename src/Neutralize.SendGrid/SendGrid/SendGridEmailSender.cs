@@ -19,7 +19,7 @@ namespace Neutralize.SendGrid
             if (option.GetIgnoreEmailSending())
                 return new EmailSenderResponse
                 {
-                    Success = false,
+                    Success = true,
                     Result = "The email sending was ignored."
                 };
 
