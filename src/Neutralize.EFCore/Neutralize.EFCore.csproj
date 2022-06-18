@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <Version>1.1.0</Version>
         <IsPackable>true</IsPackable>
         <Description>.NET Neutralize EFCore</Description>
@@ -10,11 +10,12 @@
         <PackageTags>Neutralize.EFCore</PackageTags>
         <RepositoryType>GIT</RepositoryType>
         <RootNamespace>Neutralize</RootNamespace>
+        <LangVersion>10</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Neutralize.Core\Neutralize.Core.csproj" />
-      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.6" />
     </ItemGroup>
 
 </Project>
