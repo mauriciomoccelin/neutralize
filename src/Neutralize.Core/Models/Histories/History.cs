@@ -46,7 +46,7 @@ namespace Neutralize.Models.Histories
 
         public History CalcHash()
         {
-            var shManaged = SHA1Managed.Create();
+            var shManaged = SHA1.Create();
             var content = string.Join(Data, Id, @"^Mk+7Nd\N~{KG_aG");
             var bytes = Encoding.UTF8.GetBytes(content);
             var hash = shManaged.ComputeHash(bytes);
