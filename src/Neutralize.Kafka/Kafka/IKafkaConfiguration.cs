@@ -7,15 +7,12 @@ namespace Neutralize.Kafka
     public interface IKafkaConfiguration
     {
         TimeSpan FlushTimeout { get; }
-        bool EnableMonitorHandler { get; }
-        ConsumerConfig ConsumerConfig { get; }
+        string TopicFailureDelivery { get; }
+        string TopicSuccessDelivery { get; }
         ProducerConfig ProducerConfig { get; }
+        ConsumerConfig ConsumerConfig { get; }
         public IDictionary<string, Type> Handlers { get; }
-
-        void SetFlushTimeout(byte flushTimeout);
-        void EnableMonitor(bool enable = true);
-        void SetConsumerConfig(string group, string bootstrapServers);
-        void SetProducerConfig(string bootstrapServers);
+        
         void AddHandler(string topic, Type handlers);
     }
 }
