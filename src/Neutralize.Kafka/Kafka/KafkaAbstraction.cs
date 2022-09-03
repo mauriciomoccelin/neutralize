@@ -1,73 +1,56 @@
 ﻿using System;
 using System.Reflection;
 using MediatR;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Neutralize.Kafka.Consumers;
-using Neutralize.Kafka.Productors;
 
 namespace Neutralize.Kafka
 {
     public static class KafkaAbstraction
     {
         /// <summary>
-        /// /// Register for producer only
+        /// /// Register factory for producer and consumer only
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
+        /// <returns><see cref="IServiceCollection"/></returns>
         public static IServiceCollection AddKafka(
             this IServiceCollection services,
-            IConfiguration configuration
+            Action<IKafkaConfiguration> options
         )
         {
-            var kafkaConfiguration = GetKafkaConfiguration(configuration);
-            
-            services.AddSingleton<IKafkaProducer, KafkaProducer>();
-            services.AddSingleton<IReportDelivery, ReportDelivery>();
-            services.AddSingleton<IKafkaConfiguration>(sp => kafkaConfiguration);
+            var kafkaConfiguration = KafkaConfiguration.Create();
+
+            AddKafkaFactory(services, kafkaConfiguration);
+
+            options?.Invoke(kafkaConfiguration);
 
             return services;
         }
 
         /// <summary>
-        /// Register for producer and consumer
+        /// Register factory for producer, consumer and monitor consumer handlers 
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <param name="option"></param>
+        /// <param name="options"></param>
         /// <param name="args"></param>
-        /// <returns></returns>
+        /// <returns><see cref="IServiceCollection"/></returns>
         public static IServiceCollection AddKafka(
             this IServiceCollection services,
-            IConfiguration configuration,
-            Action<IKafkaConfiguration> option,
-            params Assembly[] args
+            Action<IKafkaConfiguration> options,
+            params Assembly[] mediatrHandlerAssenblies
         )
         {
-            var kafkaConfiguration = GetKafkaConfiguration(configuration);
-            
-            services.AddSingleton<IKafkaProducer, KafkaProducer>();
-            services.AddSingleton<IReportDelivery, ReportDelivery>();
-            services.AddSingleton<IKafkaConfiguration>(sp => kafkaConfiguration);
-            
-            services.AddMediatR(args);
-            option?.Invoke(kafkaConfiguration);
+            services.AddKafka(options);
+
+            services.AddMediatR(mediatrHandlerAssenblies);
             services.AddHostedService<KafkaMonitorConsumerService>();
 
             return services;
         }
 
-        private static KafkaConfiguration GetKafkaConfiguration(IConfiguration configuration)
+        private static void AddKafkaFactory(IServiceCollection services, KafkaConfiguration kafkaConfiguration)
         {
-            var kafkaConfiguration = KafkaConfiguration.Create(
-                configuration["kafka:group"],
-                Convert.ToByte(configuration["kafka:flushTimeout"]),
-                configuration["kafka:bootstrapServers"],
-                configuration["kafka:topicFailureDelivery"],
-                configuration["kafka:topicSuccessDelivery"]
-            );
-            return kafkaConfiguration;
+            services.AddSingleton<IKafkaFactory, KafkaFactory>();
+            services.AddSingleton<IKafkaConfiguration>(sp => kafkaConfiguration);
         }
     }
 }
