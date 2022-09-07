@@ -1,6 +1,7 @@
 using Xunit;
 using Confluent.Kafka;
 using FluentAssertions;
+using Newtonsoft.Json;
 
 namespace Neutralize.Kafka.Test;
 
@@ -25,6 +26,25 @@ public class KafkaJsonDeserializer_Test
         // Assert
         result.Should().NotBeNull();
         result.Should().BeEquivalentTo(payload);
+    }
+
+    [Trait("Data", "Kafka")]
+    [Fact(DisplayName = "When deserialize a valid payload as string, must Throw JsonReaderException")]
+    public void Deserialize_ValidPayloadAsString_ThrowJsonReaderException()
+    {
+        // Arrange
+        var payload = new Notification_Fake();
+        var context = new SerializationContext();
+        var serializer = new KafkaJsonSerializer<Notification_Fake>();
+        var deserializer = new KafkaJsonDeserializer<string>();
+
+        var data = serializer.Serialize(payload, context);
+
+        // Act
+        var action = deserializer.Invoking(x => x.Deserialize(data, false, context));
+
+        // Assert
+        action.Should().ThrowExactly<JsonReaderException>();
     }
 
     [Trait("Data", "Kafka")]

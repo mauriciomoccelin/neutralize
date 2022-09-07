@@ -1,5 +1,4 @@
 using Xunit;
-using Confluent.Kafka;
 using NSubstitute;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -37,7 +36,7 @@ public class KafkaMonitorConsumerService_Test
 
         fixture.Mocker
             .GetMock<IKafkaFactory>()
-            .Setup(f => f.CreateConsumer<Ignore, string>())
+            .Setup(f => f.CreateConsumerForMonitor())
             .Returns(consumer);
 
         fixture.Mocker
@@ -63,7 +62,7 @@ public class KafkaMonitorConsumerService_Test
 
         fixture.Mocker
             .GetMock<IKafkaFactory>()
-            .Verify(f => f.CreateConsumer<Ignore, string>(), Times.Once);
+            .Verify(f => f.CreateConsumerForMonitor(), Times.Once);
 
         fixture.Mocker
             .GetMock<IMediator>()
@@ -86,7 +85,7 @@ public class KafkaMonitorConsumerService_Test
 
         fixture.Mocker
             .GetMock<IKafkaFactory>()
-            .Setup(f => f.CreateConsumer<Ignore, string>())
+            .Setup(f => f.CreateConsumerForMonitor())
             .Returns(consumer);
 
         fixture.Mocker
@@ -107,7 +106,7 @@ public class KafkaMonitorConsumerService_Test
 
         fixture.Mocker
             .GetMock<IKafkaFactory>()
-            .Verify(f => f.CreateConsumer<Ignore, string>(), Times.Once);
+            .Verify(f => f.CreateConsumerForMonitor(), Times.Once);
 
         fixture.Mocker
             .GetMock<IMediator>()
@@ -130,7 +129,7 @@ public class KafkaMonitorConsumerService_Test
 
         fixture.Mocker
             .GetMock<IKafkaFactory>()
-            .Setup(f => f.CreateConsumer<Ignore, string>())
+            .Setup(f => f.CreateConsumerForMonitor())
             .Returns(consumer);
 
         fixture.Mocker
@@ -153,7 +152,7 @@ public class KafkaMonitorConsumerService_Test
 
         fixture.Mocker
             .GetMock<IKafkaFactory>()
-            .Verify(f => f.CreateConsumer<Ignore, string>(), Times.Once);
+            .Verify(f => f.CreateConsumerForMonitor(), Times.Once);
 
         fixture.Mocker
             .GetMock<IMediator>()
