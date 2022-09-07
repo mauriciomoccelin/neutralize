@@ -1,17 +1,13 @@
 name: .NET
 
 on:
-  push:
-    branches:
-      - "master"
+  release:
+    types: [published]
   pull_request:
-    branches:
-      - "*/*"
 
 jobs:
-  pack:
+  check:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Setup .NET
@@ -23,11 +19,15 @@ jobs:
       - name: Build
         if: success()
         run: dotnet build --no-restore
-      - name: Test
+      - name: Unit Test
         if: success()
         run: dotnet test --no-build --verbosity normal
+  pack:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
       - shell: pwsh
-        if: (success() && contains('refs/heads/master', github.ref))
+        if: ${{ github.event_name == 'release' }}
         working-directory: build
         env:
           NUGET_KEY: ${{ secrets.NUGET_KEY }}
