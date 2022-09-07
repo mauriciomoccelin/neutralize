@@ -32,7 +32,7 @@ namespace Neutralize.Kafka
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            consumer = kafkaFactory.CreateConsumer<Ignore, string>();
+            consumer = kafkaFactory.CreateConsumerForMonitor();
             consumer.Subscribe(kafkaConfiguration.Handlers.Keys.ToArray());
 
             logger.LogInformation("Starting kafka monitor consumer service.");

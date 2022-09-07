@@ -30,4 +30,11 @@ public class KafkaFactory : IKafkaFactory
 
         return consumerBuilder.Build();
     }
+
+    public IConsumer<Ignore, string> CreateConsumerForMonitor()
+    {
+        var consumerBuilder = new ConsumerBuilder<Ignore, string>(Configuration.ConsumerConfig);
+
+        return consumerBuilder.Build();
+    }
 }

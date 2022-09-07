@@ -6,4 +6,5 @@ public interface IKafkaFactory
 {
     IProducer<TKey, TValue> CreateProducer<TKey, TValue>();
     IConsumer<TKey, TValue> CreateConsumer<TKey, TValue>();
+    IConsumer<Ignore, string> CreateConsumerForMonitor();
 }
