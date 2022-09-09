@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +16,11 @@ namespace Neutralize.Kafka
         private readonly IKafkaFactory kafkaFactory;
         private readonly IKafkaConfiguration kafkaConfiguration;
         private readonly ILogger<KafkaMonitorConsumerService> logger;
+
+        private Timer timer = null;
         private IConsumer<Ignore, string> consumer;
+        private CancellationToken cancellationToken;
+
 
         public KafkaMonitorConsumerService(
             IMediator mediator,
@@ -30,7 +35,24 @@ namespace Neutralize.Kafka
             this.logger = logger;
         }
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            this.cancellationToken = cancellationToken;
+            timer = new Timer(Consume, null, TimeSpan.Zero, TimeSpan.Zero);
+
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            timer?.Dispose();
+            consumer?.Close();
+            logger.LogInformation("Stop kafka consumer service.");
+
+            return Task.CompletedTask;
+        }
+
+        private async void Consume(object state)
         {
             consumer = kafkaFactory.CreateConsumerForMonitor();
             consumer.Subscribe(kafkaConfiguration.Handlers.Keys.ToArray());
@@ -70,14 +92,6 @@ namespace Neutralize.Kafka
                 }
             }
             while (!cancellationToken.IsCancellationRequested && kafkaConfiguration.EnableMonitorHandler);
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            consumer?.Close();
-            logger.LogInformation("Stop kafka consumer service.");
-
-            return Task.CompletedTask;
         }
     }
 }
