@@ -47,10 +47,11 @@ public class KafkaAbstraction_Test
         );
 
         // Assert
-        services.Count.Should().Be(11);
+        services.Count.Should().Be(12);
         services.Any(s => s.ServiceType == typeof(IKafkaFactory)).Should().BeTrue();
         services.Any(s => s.ServiceType == typeof(IKafkaConfiguration)).Should().BeTrue();
         services.Any(s => s.ServiceType == typeof(IMediator)).Should().BeTrue();
         services.Any(s => s.ServiceType == typeof(IHostedService)).Should().BeTrue();
+        services.Any(s => s.ServiceType == typeof(IKafkaMonitorConsumerService)).Should().BeTrue();
     }
 }

@@ -18,15 +18,15 @@ public class KafkaFixture : IDisposable
         Mocker = new AutoMocker();
     }
 
-    public KafkaMonitorConsumerService GenereteKafkaMonitorConsumerService()
-    {
-        Mocker = new AutoMocker();
-        return Mocker.CreateInstance<KafkaMonitorConsumerService>();
-    }
-
     public IConsumer<Ignore, string> GenereteKafkaConsumer()
     {
         return Substitute.For<IConsumer<Ignore, string>>();
+    }
+
+    public IKafkaMonitorConsumerService GenereteKafkaMonitorConsumerService()
+    {
+        Mocker = new AutoMocker();
+        return Mocker.CreateInstance<KafkaMonitorConsumerService>();
     }
 
     public IServiceCollection GenereteServiceCollection()

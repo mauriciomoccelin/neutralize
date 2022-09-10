@@ -21,11 +21,63 @@ public class KafkaMonitorConsumerService_Test
     }
 
     [Trait("Data", "Kafka")]
-    [Fact(DisplayName = "When start async, consume event as notification")]
-    public async Task StartAsync_ConsumeMessage_PublishNotificationWithSucess()
+    [Fact(DisplayName = "When consume event but EnableMonitorHandler is disabled")]
+    public async Task Consume_ConsumeWithEnableMonitorHandlerDisabled_MustIgnoreConsume()
+    {
+        // Arrange
+        var monitorService = fixture.GenereteKafkaMonitorConsumerService();
+
+        fixture.Mocker
+            .GetMock<IKafkaConfiguration>()
+            .SetupGet(f => f.EnableMonitorHandler)
+            .Returns(false);
+
+        // Act
+        await monitorService.Consume(CancellationToken.None);
+
+        // Arrange
+        fixture.Mocker
+            .GetMock<IKafkaFactory>()
+            .Verify(f => f.CreateConsumerForMonitor(), Times.Never);
+    }
+
+    [Trait("Data", "Kafka")]
+    [Fact(DisplayName = "When consume but cancellation is requested must throw operation canceled")]
+    public async Task Consume_CancellationRequested_MustThrowOperationCanceledException()
+    {
+        // Arrange
+        var cts = new CancellationTokenSource();
+        cts.Cancel();
+
+        var consumer = fixture.GenereteKafkaConsumer();
+        var monitorService = fixture.GenereteKafkaMonitorConsumerService();
+
+        fixture.Mocker
+            .GetMock<IKafkaConfiguration>()
+            .SetupGet(f => f.EnableMonitorHandler)
+            .Returns(true);
+
+        // Act
+        await monitorService.Consume(cts.Token);
+
+        // Arrange
+        fixture.Mocker
+            .GetMock<IKafkaFactory>()
+            .Verify(f => f.CreateConsumerForMonitor(), Times.Never);
+    }
+
+
+    [Trait("Data", "Kafka")]
+    [Fact(DisplayName = "When consume event as notification")]
+    public async Task Consume_ValidNotification_PublishNotificationWithSucess()
     {
         var consumer = fixture.GenereteKafkaConsumer();
-        var monitor = fixture.GenereteKafkaMonitorConsumerService();
+        var monitorService = fixture.GenereteKafkaMonitorConsumerService();
+
+        fixture.Mocker
+            .GetMock<IKafkaConfiguration>()
+            .SetupGet(f => f.EnableMonitorHandler)
+            .Returns(true);
 
         consumer
             .Subscribe(Arg.Any<IEnumerable<string>>());
@@ -49,14 +101,9 @@ public class KafkaMonitorConsumerService_Test
             .SetupGet(f => f.Handlers)
             .Returns(fixture.GenereteHandlers<Notification_Fake>());
 
-        fixture.Mocker
-            .GetMock<IKafkaConfiguration>()
-            .SetupGet(f => f.EnableMonitorHandler)
-            .Returns(false);
-
         // Act
 
-        await monitor.StartAsync(CancellationToken.None);
+        await monitorService.Consume(CancellationToken.None);
 
         // Assert
 
@@ -70,11 +117,16 @@ public class KafkaMonitorConsumerService_Test
     }
 
     [Trait("Data", "Kafka")]
-    [Fact(DisplayName = "When start async, consume event, but is not a notification")]
-    public async Task StartAsync_ConsumeMessage_NotPublishNotification()
+    [Fact(DisplayName = "When consume event, but is not a notification")]
+    public async Task Consume_InvalidNotification_NeverPublishNotification()
     {
         var consumer = fixture.GenereteKafkaConsumer();
         var monitor = fixture.GenereteKafkaMonitorConsumerService();
+
+        fixture.Mocker
+            .GetMock<IKafkaConfiguration>()
+            .SetupGet(f => f.EnableMonitorHandler)
+            .Returns(true);
 
         consumer
             .Subscribe(Arg.Any<IEnumerable<string>>());
@@ -93,14 +145,9 @@ public class KafkaMonitorConsumerService_Test
             .SetupGet(f => f.Handlers)
             .Returns(fixture.GenereteHandlers<InvalidNotification_Fake>());
 
-        fixture.Mocker
-            .GetMock<IKafkaConfiguration>()
-            .SetupGet(f => f.EnableMonitorHandler)
-            .Returns(false);
-
         // Act
 
-        await monitor.StartAsync(CancellationToken.None);
+        await monitor.Consume(CancellationToken.None);
 
         // Assert
 
@@ -114,18 +161,23 @@ public class KafkaMonitorConsumerService_Test
     }
 
     [Trait("Data", "Kafka")]
-    [Fact(DisplayName = "When start async, consume event, but trhow on get handler for topic")]
-    public async Task StartAsync_ConsumeMessage_WithSuccess()
+    [Fact(DisplayName = "When consume event, but has a invalid handler for topic")]
+    public async Task Consume_InvalidHandlerTopic_MustThrowInvalidOperationException()
     {
         var consumer = fixture.GenereteKafkaConsumer();
         var monitor = fixture.GenereteKafkaMonitorConsumerService();
+
+        fixture.Mocker
+            .GetMock<IKafkaConfiguration>()
+            .SetupGet(f => f.EnableMonitorHandler)
+            .Returns(true);
 
         consumer
             .Subscribe(Arg.Any<IEnumerable<string>>());
 
         consumer
             .Consume(Arg.Any<CancellationToken>())
-            .Returns(fixture.GenereteConsumeResult(new InvalidNotification_Fake()));
+            .Returns(fixture.GenereteConsumeResult(new Notification_Fake()));
 
         fixture.Mocker
             .GetMock<IKafkaFactory>()
@@ -135,21 +187,12 @@ public class KafkaMonitorConsumerService_Test
         fixture.Mocker
             .GetMock<IKafkaConfiguration>()
             .SetupGet(f => f.Handlers)
-            .Returns(fixture.GenereteHandlers<Notification_Fake>());
-
-        fixture.Mocker
-            .GetMock<IKafkaConfiguration>()
-            .SetupGet(f => f.EnableMonitorHandler)
-            .Returns(false);
+            .Returns(fixture.GenereteHandlers<InvalidNotification_Fake>());
 
         // Act
-
-        var action = monitor.Awaiting(x => x.StartAsync(CancellationToken.None));
+        await monitor.Consume(CancellationToken.None);
 
         // Assert
-
-        await action.Should().ThrowAsync<InvalidOperationException>();
-
         fixture.Mocker
             .GetMock<IKafkaFactory>()
             .Verify(f => f.CreateConsumerForMonitor(), Times.Once);
@@ -157,21 +200,5 @@ public class KafkaMonitorConsumerService_Test
         fixture.Mocker
             .GetMock<IMediator>()
             .Verify(f => f.Publish(It.IsAny<object>(), It.IsAny<CancellationToken>()), Times.Never);
-    }
-
-    [Trait("Data", "Kafka")]
-    [Fact(DisplayName = "When stop async with success")]
-    public async Task StopAsync_ConsumeClose_WithSuccess()
-    {
-        var consumer = fixture.GenereteKafkaConsumer();
-        var monitor = fixture.GenereteKafkaMonitorConsumerService();
-
-        // Act
-
-        var action = monitor.Awaiting(x => x.StopAsync(CancellationToken.None));
-
-        // Assert
-
-        await action.Should().NotThrowAsync();
     }
 }

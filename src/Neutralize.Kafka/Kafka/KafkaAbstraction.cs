@@ -42,7 +42,8 @@ namespace Neutralize.Kafka
             services.AddKafka(options);
 
             services.AddMediatR(mediatrHandlerAssenblies);
-            services.AddHostedService<KafkaMonitorConsumerService>();
+            services.AddSingleton<IKafkaMonitorConsumerService, KafkaMonitorConsumerService>();
+            services.AddHostedService<KafkaMonitorConsumerWorker>();
 
             return services;
         }
