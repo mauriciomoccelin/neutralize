@@ -14,9 +14,5 @@
     {
         "path": "src/Neutralize.Kafka/Neutralize.Kafka.csproj",
         "version": "6.2.2"
-    },
-    {
-        "path": "src/Neutralize.SendGrid/Neutralize.SendGrid.csproj",
-        "version": "6.2.2"
     }
 ]
