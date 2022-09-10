@@ -1,6 +1,5 @@
 using Confluent.Kafka;
 using MediatR;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -10,17 +9,14 @@ using System.Threading.Tasks;
 
 namespace Neutralize.Kafka
 {
-    public class KafkaMonitorConsumerService : IHostedService
+    public sealed class KafkaMonitorConsumerService : IKafkaMonitorConsumerService
     {
         private readonly IMediator mediator;
         private readonly IKafkaFactory kafkaFactory;
         private readonly IKafkaConfiguration kafkaConfiguration;
         private readonly ILogger<KafkaMonitorConsumerService> logger;
 
-        private Timer timer = null;
         private IConsumer<Ignore, string> consumer;
-        private CancellationToken cancellationToken;
-
 
         public KafkaMonitorConsumerService(
             IMediator mediator,
@@ -35,63 +31,53 @@ namespace Neutralize.Kafka
             this.logger = logger;
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public void Dispose()
         {
-            this.cancellationToken = cancellationToken;
-            timer = new Timer(Consume, null, TimeSpan.Zero, TimeSpan.Zero);
-
-            return Task.CompletedTask;
+            consumer?.Dispose();
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        public async Task Consume(CancellationToken cancellationToken)
         {
-            timer?.Dispose();
-            consumer?.Close();
-            logger.LogInformation("Stop kafka consumer service.");
-
-            return Task.CompletedTask;
-        }
-
-        private async void Consume(object state)
-        {
-            consumer = kafkaFactory.CreateConsumerForMonitor();
-            consumer.Subscribe(kafkaConfiguration.Handlers.Keys.ToArray());
-
-            logger.LogInformation("Starting kafka monitor consumer service.");
-
-            do
+            if (!kafkaConfiguration.EnableMonitorHandler)
             {
-                try
-                {
-                    var consumeResult = consumer.Consume(cancellationToken);
-                    var type = kafkaConfiguration.Handlers.First(k => k.Key.Equals(consumeResult.Topic));
-                    var result = JsonConvert.DeserializeObject(consumeResult.Message.Value, type.Value);
-                    if (result is INotification)
-                    {
-                        logger.LogInformation(
-                            "Received message: tópic ({0}), offset ({1}), partition ({2})",
-                            consumeResult.Topic,
-                            consumeResult.Offset,
-                            consumeResult.Partition.Value
-                        );
+                logger.LogWarning("Monitor service is disabled");
+                return;
+            }
 
-                        await mediator.Publish(result, cancellationToken);
-                    }
-                    else
-                    {
-                        logger.LogWarning(
-                            "The tópic {0} for offset {1} is null",
-                            consumeResult.Topic,
-                            consumeResult.TopicPartitionOffset
-                        );
-                    }
-                }
-                catch (ConsumeException exception)
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                consumer = kafkaFactory.CreateConsumerForMonitor();
+                consumer.Subscribe(kafkaConfiguration.Handlers.Keys.ToArray());
+
+                var consumeResult = consumer.Consume(cancellationToken);
+                var type = kafkaConfiguration.Handlers.First(k => k.Key.Equals(consumeResult.Topic));
+                var result = JsonConvert.DeserializeObject(consumeResult.Message.Value, type.Value);
+                if (result is INotification)
                 {
-                    logger.LogError(exception, exception.Error.Reason);
+                    logger.LogInformation(
+                        "Received message: tópic ({0}), offset ({1}), partition ({2})",
+                        consumeResult.Topic,
+                        consumeResult.Offset,
+                        consumeResult.Partition.Value
+                    );
+
+                    await mediator.Publish(result, cancellationToken);
+                }
+                else
+                {
+                    logger.LogWarning(
+                        "The tópic {0} for offset {1} is null",
+                        consumeResult.Topic,
+                        consumeResult.TopicPartitionOffset
+                    );
                 }
             }
-            while (!cancellationToken.IsCancellationRequested && kafkaConfiguration.EnableMonitorHandler);
+            catch (Exception exception)
+            {
+                logger.LogError(exception, exception.Message);
+            }
         }
     }
 }
