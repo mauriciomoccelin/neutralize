@@ -48,7 +48,7 @@ namespace Neutralize.Kafka
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                consumer = kafkaFactory.CreateConsumerForMonitor();
+                consumer ??= kafkaFactory.CreateConsumerForMonitor();
                 consumer.Subscribe(kafkaConfiguration.Handlers.Keys.ToArray());
 
                 var consumeResult = consumer.Consume(cancellationToken);
