@@ -23,11 +23,12 @@ jobs:
         if: success()
         run: dotnet test --no-build --verbosity normal
   pack:
+    if: github.event_name == 'release'
     needs: check
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - shell: pwsh
-        if: ${{ github.event_name == 'release' }}
         working-directory: build
         env:
           NUGET_KEY: ${{ secrets.NUGET_KEY }}

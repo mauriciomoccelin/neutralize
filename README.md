@@ -39,7 +39,7 @@ public interface IRepository<TEntity, in TId> : IDisposable
 }
 ```
 
-You can use IoC to specify the implementation of this interface or use the default implementation with EFCOre as ORM.
+You can use IoC to specify the implementation of this interface or use the default implementation with EFCore as ORM.
 
 1. Fist create a DBContext
 
@@ -70,7 +70,7 @@ public sealed class NeutralizeDBContext : DbContext
 }
 ```
 
-2. Create a class to represent the concret implementation of repository.
+2. Create a class to represent the repository implementation.
 
 ```csharp
 public class Repository<TEntity, TId> : EfCoreRepository<NeutralizeDBContext, TEntity, TId>
@@ -128,7 +128,7 @@ public static void AddDatabaseConfiguration(this IServiceCollection services)
 
 ### Dapper
 
-If needs Dapper to read data on database with custon query that EFCore, for any rason, can't read use de interface `IDapperRepository`.
+If needs Dapper to read data on database with custom query that EF Core, for any reason, can't read use de interface `Dapper Repository`.
 
 ```csharp
 public interface IDapperRepository : IDisposable
@@ -139,7 +139,7 @@ public interface IDapperRepository : IDisposable
 }
 ```
 
-This class has a concrete default implementation with class `DapperRepository`. This class receive a interface `IDapperConnectionFactory` to create opened database connection as you well.
+This class has a concrete default implementation with class `Dapper Repository`. This class receive a interface `Dapper ConnectionFactory` to create opened database connection as you well.
 
 ```csharp
 public interface IDapperConnectionFactory
@@ -265,7 +265,7 @@ public sealed class ToDoCommandHandler :
 }
 ```
 
-3. Register the dependecies
+3. Register the dependencies
 
 ```csharp
 public static void AddDatabaseConfiguration(this IServiceCollection services)
@@ -278,9 +278,9 @@ public static void AddDatabaseConfiguration(this IServiceCollection services)
 }
 ```
 
-4. Received request and send command
+4. Receiving request then publish a command
 
-In your API, for example, you can received the request as a command and send to be handleded.
+In your API, for example, you can receive the request as a command and send to be handled.
 
 ```csharp
 [Authorize]
@@ -315,7 +315,7 @@ public class ToDoController : Controller
 
 Integration between [MediatR](https://github.com/jbogard/MediatR) and [Confluent.Kafka](https://github.com/confluentinc/confluent-kafka-dotnet) library.
 
-1 ° Register the event types for the topic and the assembly where the handlers are.
+1° Register the event types for the topic and the assembly where the handlers are.
 
 ```csharp
 using Neutralize.Kafka;
