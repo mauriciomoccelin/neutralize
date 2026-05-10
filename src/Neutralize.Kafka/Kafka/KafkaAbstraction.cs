@@ -41,7 +41,7 @@ namespace Neutralize.Kafka
         {
             services.AddKafka(options);
 
-            services.AddMediatR(mediatrHandlerAssenblies);
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(mediatrHandlerAssenblies));
             services.AddSingleton<IKafkaMonitorConsumerService, KafkaMonitorConsumerService>();
             services.AddHostedService<KafkaMonitorConsumerWorker>();
 

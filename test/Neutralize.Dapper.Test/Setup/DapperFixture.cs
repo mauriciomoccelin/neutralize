@@ -1,6 +1,6 @@
 using System;
 using System.Data;
-using System.Data.SQLite;
+using Microsoft.Data.Sqlite;
 using System.IO;
 using Dapper;
 using Moq.AutoMock;
@@ -30,7 +30,7 @@ namespace Neutralize.Dapper.Test.Setup
 
         public IDbConnection GenereteConnection()
         {
-            var connection = new SQLiteConnection("Data Source=:memory:");
+            var connection = new SqliteConnection("Data Source=:memory:");
 
             connection.Open();
             connection.Execute(ReadScriptFile("CreateInitialTables"));

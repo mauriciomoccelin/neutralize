@@ -100,7 +100,7 @@ namespace Neutralize.EFCore.Test
 
             // Assert
             todos.Should().NotBeEmpty();
-            todos.Count.Should().BeGreaterOrEqualTo(10);
+            todos.Count.Should().BeGreaterThanOrEqualTo(10);
         }
         
         [Trait("Data", "EFCore")]
@@ -116,7 +116,7 @@ namespace Neutralize.EFCore.Test
             var count = await repository.CountAsync(todo => todo.Desacription != null);
 
             // Assert
-            count.Should().BeGreaterOrEqualTo(10);
+            count.Should().BeGreaterThanOrEqualTo(10);
         }
         
         [Trait("Data", "EFCore")]
@@ -133,7 +133,7 @@ namespace Neutralize.EFCore.Test
 
             // Assert
             todos.Should().NotBeEmpty();
-            todos.Count().Should().BeGreaterOrEqualTo(10);
+            todos.Count().Should().BeGreaterThanOrEqualTo(10);
         }
         
         [Trait("Data", "EFCore")]
